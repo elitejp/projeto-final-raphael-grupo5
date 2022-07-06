@@ -13,26 +13,31 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com"
     const history= useHistory()
     function dados(dados){
         console.log(dados)
+
         const data={
             email:dados.email,
             name:dados.nome,
             password:dados.senha,
             telefone: dados.telefone,
             endereco: dados.endereco,
-            tipo_moradia: dados.tipo_moradia
+            tipo_moradia: dados.tipo_moradia,
+            alimento: dados.alimento,
+            treinamento: dados.treinamento
         }
         
         axios.post(baseURL+"/register",data)
         .then((res)=>{
-            console.log(res)
+            
             if(res.status===201){
                toast.sucess("Conta criada com sucesso")
                history.push("/dashboard-care")
+
             }
             
-        }).catch((err)=>{
-            console.log(err)
-            toast.error("Não foi possivel criar sua conta")
+            
+            
+        }).catch((res)=>{console.log(res)
+            toast.error(res.response.data)
         })
 
     }
@@ -44,15 +49,17 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com"
         telefone:yup.string().required("Telefone obrigatório").matches(/^1\d\d(\d\d)?$|^0800 ?\d{3} ?\d{4}$|^(\(0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d\) ?|0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d[ .-]?)?(9|9[ .-])?[2-9]\d{3}[ .-]?\d{4}$/,"Telefone inválido"),
         endereco:yup.string().required("Endereço obrigatório"),
         cpf:yup.string().required("Cpf necessário").matches(/^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}/,"cpf inválido"),
-        tipo_moradia:yup.string().required("Tipo de moradia necessário")
-
+        tipo_moradia:yup.string().required("Tipo de moradia necessário"),
+        alimento:yup.boolean(),
+        preco:yup.string().required(),
+        treinamento:yup.boolean()
     })
 
     const {register, handleSubmit}= useForm({resolver:yupResolver(formSchema)})
 
     return(
         
-        <StyledDiv h="100vh"  display="flex" w="100%" bc="#68D1E7" >
+        <StyledDiv  h="auto"  display="flex" w="100%" bc="#68D1E7" >
             <StyledDiv  mw="800px" display="flex" fd="column" margin="20px auto" w="80%" bc="#1D1D1D" h="90%" br="10px" >
             <StyledDiv  display="flex" fd="column" margin="20px auto"    br="10px">
 
@@ -81,14 +88,21 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com"
                     <StyledLabel>Endereço</StyledLabel>
                     <StyledInput placeholder="Digite seu Endereço" h="40px" {...register("endereco")} ></StyledInput>
 
+                     
                     <StyledLabel>CPF</StyledLabel>
                     <StyledInput placeholder="Digite seu CPF" h="40px" {...register("cpf")}></StyledInput>
                     
                     <StyledLabel>Tipo de moradia</StyledLabel>
                     <StyledInput placeholder="Especifique o tipo" h="40px" {...register("tipo_moradia")}></StyledInput>
+                     
+                    <StyledLabel>Preço Dia/hora</StyledLabel>
+                    <StyledInput placeholder="Digite o preço por dia e hora" h="40px" {...register("preco")}></StyledInput>
                     
-                    <StyledLabel>Provê alimento do Pet?</StyledLabel>
-                    <StyledInput type="checkbox" h="40px" {...register("alimento")}></StyledInput>
+                     
+
+                    <StyledLabel>Provê alimento do Pet?  <StyledInput type="checkbox" width="20px" {...register("alimento")}></StyledInput> </StyledLabel>
+                    <StyledLabel>Possui algum tipo de treinamento ou curso na área?  <StyledInput type="checkbox" width="20px" {...register("treinamento")}></StyledInput> </StyledLabel>
+                    
                     
 
                      <StyledButton type="submit" w="50%"backg="#F28631">Cadastre-se</StyledButton>

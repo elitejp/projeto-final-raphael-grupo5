@@ -10,8 +10,6 @@ border-radius:${(props)=>props.br};
 padding:${(props)=>props.p};
 flex-direction:${(props)=>props.fd};
 max-width:${(props)=>props.mw};
-
-
 `;
 
 export const StyledText= styled.p`
@@ -31,7 +29,7 @@ flex-direction:${(props)=>props.fd};
 `
 export const StyledLabel= styled.label`
 color:${(props)=>props.color||"white"};
-margin:${(props)=>props.m||"20px auto 5px 0"};
+margin:${(props)=>props.m||"20px auto 5px 0"}
 
 `
 
