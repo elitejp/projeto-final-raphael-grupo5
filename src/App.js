@@ -1,4 +1,4 @@
-import Routes from "./providers";
+import Routes from "./routes";
 import GlobalStyle from "./styles/global";
 import { ToastContainer } from "react-toastify";
 
