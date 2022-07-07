@@ -6,9 +6,11 @@ const ContainerRegisterOwner = styled.div`
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
+
 	font-family: "Inter";
 	background-color: var(--primary100);
 	font-family: "Inter", sans-serif;
+
 	section {
 		background-color: var(--grey300);
 		width: 90vw;
