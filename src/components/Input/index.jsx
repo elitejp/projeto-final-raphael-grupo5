@@ -1,13 +1,23 @@
 import { StyledContainer, StyledInput } from "./styles";
 
-function Input({ label, icon: Icon, ...rest }) {
+function Input({
+  label,
+  isGray = false,
+  icon: Icon,
+  register,
+  name,
+  error,
+  ...rest
+}) {
   return (
     <StyledContainer>
-      <div>{label}</div>
+      <div>
+        {label} {!!error && <span> - {error}</span>}
+      </div>
 
-      <StyledInput>
+      <StyledInput isGray={isGray} isError={!!error}>
         {Icon && <Icon />}
-        <input {...rest} />
+        <input {...register(name)} {...rest} />
       </StyledInput>
     </StyledContainer>
   );

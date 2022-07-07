@@ -5,11 +5,19 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledInput = styled.div`
-  background-color: var(--grey300);
+  background-color: ${(props) =>
+    props.isGray ? "var(--grey200)" : "var(--grey300)"};
   border-radius: 3px;
-  border: 2px solid var(--grey100);
-  color: var(--grey0);
+  border: 2px solid
+    ${(props) =>
+      props.isError
+        ? "var(--negative)"
+        : props.isGray
+        ? "var(--grey200)"
+        : "var(--grey300)"};
+  color: var(--grey100);
   padding: 1rem;
+  border-radius: 10px;
   width: 100%;
   display: flex;
 
@@ -21,7 +29,11 @@ export const StyledInput = styled.div`
     color: var(--grey0);
 
     &::placeholder {
-      color: var(--grey0);
+      color: var(--grey100);
     }
+  }
+
+  span {
+    color: var(--negative);
   }
 `;
