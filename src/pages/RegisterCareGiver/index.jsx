@@ -1,4 +1,4 @@
-import { StyledDiv,StyledText,StyledLabel,StyledForm,StyledInput, StyledButton } from "./styles";
+import { StyledDiv,StyledText,StyledLabel,StyledForm,StyledInput } from "./styles";
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
 import axios from "axios";
@@ -7,9 +7,11 @@ import { useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import {toast} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+import Button from "../../components/Button";
+import Input from "../../components/Input";
 
 function RegisterCareGiver() {
-const baseURL = "https://caregiver-and-pets.herokuapp.com"
+const baseURL = "https://caregiver-and-pets.herokuapp.com";
     const history= useHistory()
     function dados(dados){
         console.log(dados)
@@ -74,29 +76,29 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com"
               <StyledForm onSubmit={handleSubmit(dados)} display="flex" fd="column" w="80%" margin="20px auto" dfd="column">
 
                     <StyledLabel>Nome</StyledLabel>
-                    <StyledInput placeholder="Digite seu nome" h="40px"  {...register("nome")}></StyledInput>
+                    <Input placeholder="Digite seu nome"  {...register("nome")}></Input>
 
                     <StyledLabel>Email</StyledLabel>
-                    <StyledInput type="text" placeholder="Digite seu Email" h="40px" {...register("email")} ></StyledInput>
+                    <Input type="text" placeholder="Digite seu Email" h="40px" {...register("email")} ></Input>
                       
                     <StyledLabel>Senha</StyledLabel>
-                    <StyledInput type="password" placeholder="Digite sua senha" h="40px" {...register("senha")} ></StyledInput>
+                    <Input type="password" placeholder="Digite sua senha" h="40px" {...register("senha")} ></Input>
 
                     <StyledLabel>Telefone para contato</StyledLabel>
-                    <StyledInput type="number" placeholder="Digite seu Telefone" h="40px" {...register("telefone")}></StyledInput>
+                    <Input type="number" placeholder="Digite seu Telefone" h="40px" {...register("telefone")}></Input>
 
                     <StyledLabel>Endereço</StyledLabel>
-                    <StyledInput placeholder="Digite seu Endereço" h="40px" {...register("endereco")} ></StyledInput>
+                    <Input placeholder="Digite seu Endereço" h="40px" {...register("endereco")} ></Input>
 
                      
                     <StyledLabel>CPF</StyledLabel>
-                    <StyledInput placeholder="Digite seu CPF" h="40px" {...register("cpf")}></StyledInput>
+                    <Input placeholder="Digite seu CPF" h="40px" {...register("cpf")}></Input>
                     
                     <StyledLabel>Tipo de moradia</StyledLabel>
-                    <StyledInput placeholder="Especifique o tipo" h="40px" {...register("tipo_moradia")}></StyledInput>
+                    <Input placeholder="Especifique o tipo" h="40px" {...register("tipo_moradia")}></Input>
                      
                     <StyledLabel>Preço Dia/hora</StyledLabel>
-                    <StyledInput placeholder="Digite o preço por dia e hora" h="40px" {...register("preco")}></StyledInput>
+                    <Input placeholder="Digite o preço por dia e hora" h="40px" {...register("preco")}></Input>
                     
                      
 
@@ -105,7 +107,7 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com"
                     
                     
 
-                     <StyledButton type="submit" w="50%"backg="#F28631">Cadastre-se</StyledButton>
+                     <Button w="50%" type ="submit">Cadastre-se</Button>
                  </StyledForm>
                               
                       <StyledText margin="0 auto 20px " color="gray" >Já possui conta? faça o login <Link to={"/login"}>aqui</Link></StyledText>
