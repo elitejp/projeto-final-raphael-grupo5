@@ -9,7 +9,12 @@ export const StyledInput = styled.div`
     props.isGray ? "var(--grey200)" : "var(--grey300)"};
   border-radius: 3px;
   border: 2px solid
-    ${(props) => (props.isGray ? "var(--grey200)" : "var(--grey300)")};
+    ${(props) =>
+      props.isError
+        ? "var(--negative)"
+        : props.isGray
+        ? "var(--grey200)"
+        : "var(--grey300)"};
   color: var(--grey100);
   padding: 1rem;
   border-radius: 10px;
@@ -26,5 +31,9 @@ export const StyledInput = styled.div`
     &::placeholder {
       color: var(--grey100);
     }
+  }
+
+  span {
+    color: var(--negative);
   }
 `;
