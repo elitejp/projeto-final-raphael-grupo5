@@ -1,11 +1,10 @@
+import Logo from "../Logo";
 import { StyledHeader } from "./styles";
 
 function Header() {
   return (
     <StyledHeader>
-      <h1>
-        i<span>Pet</span>
-      </h1>
+      <Logo />
       <div>
         <button>Sair</button>
         <span>|</span>
