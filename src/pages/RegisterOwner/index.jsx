@@ -5,6 +5,7 @@ import ContainerRegisterOwner from "../../styles/styleRegisterOwner.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiOwner } from "../../services/index.js";
+import Button from "../../components/Button/index.jsx";
 
 function RegisterOwner() {
 	const schema = yup.object().shape({
@@ -71,7 +72,6 @@ function RegisterOwner() {
 								{...register("name")}
 								type="text"
 								placeholder="Digite aqui seu nome"
-								error={errors.name}
 							/>
 							<p className="error">{errors.name?.message}</p>
 						</div>
@@ -82,43 +82,41 @@ function RegisterOwner() {
 								{...register("age")}
 								type="text"
 								placeholder="Digite aqui sua idade"
-								error={errors.age}
 							/>
 							<p className="error">{errors.age?.message}</p>
 						</div>
+
 						<div>
 							<label>Email</label>
 							<input
 								{...register("email")}
 								type="email"
 								placeholder="Digite aqui seu email"
-								error={errors.email}
 							/>
 							<p className="error">{errors.email?.message}</p>
 						</div>
+
 						<div>
 							<label>Senha</label>
 							<input
 								{...register("password")}
 								type="password"
 								placeholder="Digite aqui sua senha"
-								error={errors.password}
 							/>
 							<p className="error">{errors.password?.message}</p>
 						</div>
+
 						<div>
 							<label>Confirme sua senha</label>
 							<input
 								{...register("confirmPassword")}
 								type="password"
 								placeholder="Digite aqui seu nome"
-								error={errors.confirmPassword}
-								helperText={errors.confirmPassword?.message}
 							/>
 							<p className="error">{errors.confirmPassword?.message}</p>
 						</div>
 
-						<button type="submit">Cadastre-se</button>
+						<Button type="submit">Cadastre-se</Button>
 						<p>Já possui conta? Faça o login aqui</p>
 					</form>
 				</section>
