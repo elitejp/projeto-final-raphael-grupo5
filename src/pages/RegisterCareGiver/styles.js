@@ -31,6 +31,7 @@ export const StyledLabel= styled.label`
 color:${(props)=>props.color||"white"};
 margin:${(props)=>props.m||"20px auto 5px 0"}
 
+
 `
 
 export const StyledInput = styled.input`

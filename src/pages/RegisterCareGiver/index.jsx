@@ -53,11 +53,11 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
         cpf:yup.string().required("Cpf necessário").matches(/^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}/,"cpf inválido"),
         tipo_moradia:yup.string().required("Tipo de moradia necessário"),
         alimento:yup.boolean(),
-        preco:yup.string().required(),
+        preco:yup.string().required("Especifique um valor"),
         treinamento:yup.boolean()
     })
 
-    const {register, handleSubmit}= useForm({resolver:yupResolver(formSchema)})
+    const {register, handleSubmit, formState:{errors}}= useForm({resolver:yupResolver(formSchema)})
 
     return(
         
@@ -73,41 +73,51 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
                  
                  
               </StyledDiv>
-              <StyledForm onSubmit={handleSubmit(dados)} display="flex" fd="column" w="80%" margin="20px auto" dfd="column">
+              <StyledForm  onSubmit={handleSubmit(dados)} display="flex" fd="column" w="80%" margin="20px auto" dfd="column">
 
                     <StyledLabel>Nome</StyledLabel>
-                    <Input placeholder="Digite seu nome"  {...register("nome")}></Input>
-
+                    <Input placeholder="Digite seu nome" register = {register} name="nome"/>
+                    <StyledLabel color="pink" m="0">{errors.nome?.message}</StyledLabel>
+            
                     <StyledLabel>Email</StyledLabel>
-                    <Input type="text" placeholder="Digite seu Email" h="40px" {...register("email")} ></Input>
-                      
+                    <Input type="text" placeholder="Digite seu Email" h="40px"register = {register} name="email"/>
+                    <StyledLabel color="pink" m="0">{errors.email?.message}</StyledLabel>
+                    
                     <StyledLabel>Senha</StyledLabel>
-                    <Input type="password" placeholder="Digite sua senha" h="40px" {...register("senha")} ></Input>
+                    <Input type="password" placeholder="Digite sua senha" h="40px" register = {register} name="senha" />
+                    <StyledLabel color="pink" m="0">{errors.senha?.message}</StyledLabel>
+
 
                     <StyledLabel>Telefone para contato</StyledLabel>
-                    <Input type="number" placeholder="Digite seu Telefone" h="40px" {...register("telefone")}></Input>
+                    <Input type="number" placeholder="Digite seu Telefone" h="40px" register = {register} name="telefone" />
+                    <StyledLabel color="pink" m="0">{errors.telefone?.message}</StyledLabel>
 
                     <StyledLabel>Endereço</StyledLabel>
-                    <Input placeholder="Digite seu Endereço" h="40px" {...register("endereco")} ></Input>
-
+                    <Input placeholder="Digite seu Endereço" h="40px" name="endereco" register = {register} />
+                    <StyledLabel color="pink" m="0">{errors.endereco?.message}</StyledLabel>
                      
                     <StyledLabel>CPF</StyledLabel>
-                    <Input placeholder="Digite seu CPF" h="40px" {...register("cpf")}></Input>
-                    
+                    <Input placeholder="Digite seu CPF" h="40px" name="cpf"  register = {register}/>
+                    <StyledLabel color="pink" m="0">{errors.cpf?.message}</StyledLabel>
+
+
                     <StyledLabel>Tipo de moradia</StyledLabel>
-                    <Input placeholder="Especifique o tipo" h="40px" {...register("tipo_moradia")}></Input>
-                     
+                    <Input placeholder="Especifique o tipo" h="40px" register = {register} name="tipo_moradia"/>
+                    <StyledLabel color="pink" m="0">{errors.tipo_moradia?.message}</StyledLabel>
+
                     <StyledLabel>Preço Dia/hora</StyledLabel>
-                    <Input placeholder="Digite o preço por dia e hora" h="40px" {...register("preco")}></Input>
-                    
+                    <Input placeholder="Digite o preço por dia e hora" h="40px" register = {register} name="preco"/>
+                    <StyledLabel color="pink" m="0">{errors.preco?.message}</StyledLabel>
                      
 
-                    <StyledLabel>Provê alimento do Pet?  <StyledInput type="checkbox" width="20px" {...register("alimento")}></StyledInput> </StyledLabel>
+                    <StyledLabel>Provê alimento do Pet?  <StyledInput type="checkbox" width="20px" {...register("alimento")} ></StyledInput> </StyledLabel>
                     <StyledLabel>Possui algum tipo de treinamento ou curso na área?  <StyledInput type="checkbox" width="20px" {...register("treinamento")}></StyledInput> </StyledLabel>
                     
                     
-
+ 
                      <Button w="50%" type ="submit">Cadastre-se</Button>
+
+                     
                  </StyledForm>
                               
                       <StyledText margin="0 auto 20px " color="gray" >Já possui conta? faça o login <Link to={"/login"}>aqui</Link></StyledText>

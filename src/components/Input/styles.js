@@ -8,7 +8,7 @@ export const StyledInput = styled.div`
   background-color: var(--grey300);
   border-radius: 3px;
   border: 2px solid var(--grey100);
-  color: var(--grey0);
+  color: ${(props)=>props.lc||"var(--grey0)"};
   padding: 1rem;
   width: 100%;
   display: flex;
