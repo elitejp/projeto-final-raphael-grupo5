@@ -60,15 +60,6 @@ const ContainerRegisterOwner = styled.div`
 	.error {
 		color: var(--negative);
 	}
-	button {
-		background-color: var(--secondary100);
-		font-weight: 800;
-		border: none;
-		border-radius: 10px;
-		padding: 15px;
-		width: 60%;
-		cursor: pointer;
-	}
 `;
 
 export default ContainerRegisterOwner;
