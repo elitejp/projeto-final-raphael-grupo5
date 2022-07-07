@@ -3,6 +3,7 @@ import DashboardCareGiver from "../pages/DashboardCareGiver";
 import DashboardOwner from "../pages/DashboardOwner";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import LoginCuidador from "../pages/Login_Cuidador";
 import RegisterCareGiver from "../pages/RegisterCareGiver";
 import RegisterOwner from "../pages/RegisterOwner";
 
@@ -22,6 +23,9 @@ function Routes() {
 
         <Route exact path="/register-care">
           <RegisterCareGiver />
+        </Route>
+        <Route exact path="/login-care">
+          <LoginCuidador/>
         </Route>
 
         <Route exact path="/register-owner">
