@@ -1,11 +1,11 @@
 import { StyledContainer, StyledInput } from "./styles";
 
-function Input({ label, icon: Icon, ...rest }) {
+function Input({ label, isGray = false, icon: Icon, ...rest }) {
   return (
     <StyledContainer>
       <div>{label}</div>
 
-      <StyledInput>
+      <StyledInput isGray={isGray}>
         {Icon && <Icon />}
         <input {...rest} />
       </StyledInput>
