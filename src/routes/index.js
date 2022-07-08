@@ -23,15 +23,15 @@ function Routes() {
         </Route>
 
         <Route exact path="/register-care">
-          <RegisterCareGiver />
+        <RegisterCareGiver />
         </Route>
-        
+
         <Route exact path="/login-care">
-          <LoginCuidador/>
+        <LoginCuidador/>
         </Route>
-        
+
         <Route exact path="/login-dono">
-          <LoginDono/>
+        <LoginDono/>
         </Route>
 
         <Route exact path="/register-owner">
