@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 export const StyledContainer = styled.div`
   text-align: left;
+  width:100%
 `;
 
 export const StyledInput = styled.div`
+  
   background-color: ${(props) =>
     props.isGray ? "var(--grey200)" : "var(--grey300)"};
   border-radius: 3px;
@@ -18,7 +20,7 @@ export const StyledInput = styled.div`
   color: var(--grey100);
   padding: 1rem;
   border-radius: 10px;
-  width: 100%;
+  width: "100%";
   display: flex;
 
   input {
@@ -27,6 +29,7 @@ export const StyledInput = styled.div`
     flex: 1;
     border: 0;
     color: var(--grey0);
+    width:100%
 
     &::placeholder {
       color: var(--grey100);

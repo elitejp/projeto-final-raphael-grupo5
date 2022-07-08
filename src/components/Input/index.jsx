@@ -9,7 +9,7 @@ function Input({ label, isGray = false, icon: Icon, register, name, error, ...re
 
 			<StyledInput isGray={isGray} isError={!!error}>
 				{Icon && <Icon />}
-				<input {...register(name)} {...rest} />
+				<input  {...register(name)} {...rest} />
 			</StyledInput>
 		</StyledContainer>
 	);
