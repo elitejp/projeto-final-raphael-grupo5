@@ -6,17 +6,9 @@ const ContainerRegisterOwner = styled.div`
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
-<<<<<<< HEAD
 	font-family: "Inter";
 	background-color: var(--primary100);
 	font-family: "Inter", sans-serif;
-=======
-
-	font-family: "Inter";
-	background-color: var(--primary100);
-	font-family: "Inter", sans-serif;
-
->>>>>>> 55aca01344e37b6e4ebbe9c25bd13eca616b0a6e
 	section {
 		background-color: var(--grey300);
 		width: 90vw;
@@ -40,17 +32,11 @@ const ContainerRegisterOwner = styled.div`
 	h3 {
 		font-size: 20px;
 	}
-<<<<<<< HEAD
 	p,
 	a {
 		font-size: 14px;
 		font-weight: 600;
 		color: var(--grey100);
-=======
-	p {
-		font-size: 14px;
-		font-weight: 600;
->>>>>>> 55aca01344e37b6e4ebbe9c25bd13eca616b0a6e
 	}
 	span {
 		color: var(--secondary0);
@@ -62,23 +48,6 @@ const ContainerRegisterOwner = styled.div`
 		gap: 20px;
 		width: 75%;
 	}
-<<<<<<< HEAD
-=======
-	label {
-		font-size: 16px;
-		font-weight: 600;
-		padding-bottom: 10px;
-	}
-	input {
-		background-color: var(--grey200);
-		padding: 13px;
-		border: none;
-		border-radius: 10px;
-	}
-	.error {
-		color: var(--negative);
-	}
->>>>>>> 55aca01344e37b6e4ebbe9c25bd13eca616b0a6e
 `;
 
 export default ContainerRegisterOwner;
