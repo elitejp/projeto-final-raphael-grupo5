@@ -14,7 +14,7 @@ function RegisterCareGiver() {
 const baseURL = "https://caregiver-and-pets.herokuapp.com";
     const history= useHistory()
     function dados(dados){
-        console.log(dados)
+        
 
         const data={
             email:dados.email,
@@ -31,15 +31,13 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
         .then((res)=>{
             
             if(res.status===201){
-               toast.sucess("Conta criada com sucesso")
+               toast.success("Conta criada com sucesso")
                history.push("/dashboard-care")
 
             }
             
-            
-            
         }).catch((res)=>{console.log(res)
-            toast.error(res.response.data)
+            toast.error(res.response?.data)
         })
 
     }
