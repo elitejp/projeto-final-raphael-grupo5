@@ -3,11 +3,11 @@ import {
   StyledText,
   StyledLabel,
   StyledForm,
-  StyledInput,
+  
 } from "./styles";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import axios from "axios";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
