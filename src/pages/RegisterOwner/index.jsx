@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { apiOwner } from "../../services/index.js";
 import Button from "../../components/Button/index.jsx";
+import Input from "../../components/Input/index.jsx";
+import { Link } from "react-router-dom";
 
 function RegisterOwner() {
 	const schema = yup.object().shape({
@@ -37,6 +39,8 @@ function RegisterOwner() {
 			age: age,
 		};
 
+		console.log(data);
+
 		apiOwner
 			.post("/register", user)
 			.then((response) => {
@@ -66,58 +70,55 @@ function RegisterOwner() {
 						Seção do <span>Dono</span>
 					</p>
 					<form onSubmit={handleSubmit(onSubmit)}>
-						<div>
-							<label>Nome</label>
-							<input
-								{...register("name")}
-								type="text"
-								placeholder="Digite aqui seu nome"
-							/>
-							<p className="error">{errors.name?.message}</p>
-						</div>
+						<Input
+							isGray
+							label="Nome"
+							placeholder="Digite seu nome"
+							register={register}
+							name="name"
+							error={errors.name?.message}
+						/>
 
-						<div>
-							<label>Idade</label>
-							<input
-								{...register("age")}
-								type="text"
-								placeholder="Digite aqui sua idade"
-							/>
-							<p className="error">{errors.age?.message}</p>
-						</div>
+						<Input
+							isGray
+							label="Idade"
+							placeholder="Digite sua idade"
+							register={register}
+							name="age"
+							error={errors.age?.message}
+						/>
 
-						<div>
-							<label>Email</label>
-							<input
-								{...register("email")}
-								type="email"
-								placeholder="Digite aqui seu email"
-							/>
-							<p className="error">{errors.email?.message}</p>
-						</div>
+						<Input
+							isGray
+							label="Email"
+							placeholder="Digite seu email"
+							register={register}
+							name="email"
+							error={errors.email?.message}
+						/>
 
-						<div>
-							<label>Senha</label>
-							<input
-								{...register("password")}
-								type="password"
-								placeholder="Digite aqui sua senha"
-							/>
-							<p className="error">{errors.password?.message}</p>
-						</div>
+						<Input
+							isGray
+							label="Senha"
+							type="password"
+							placeholder="Digite sua senha"
+							register={register}
+							name="password"
+							error={errors.password?.message}
+						/>
 
-						<div>
-							<label>Confirme sua senha</label>
-							<input
-								{...register("confirmPassword")}
-								type="password"
-								placeholder="Digite aqui seu nome"
-							/>
-							<p className="error">{errors.confirmPassword?.message}</p>
-						</div>
+						<Input
+							isGray
+							label="Confirme sua senha"
+							type="password"
+							placeholder="Confirme sua senha"
+							register={register}
+							name="confirmPassword"
+							error={errors.confirmPassword?.message}
+						/>
 
 						<Button type="submit">Cadastre-se</Button>
-						<p>Já possui conta? Faça o login aqui</p>
+						<Link to={"/login"}>Já possui conta? Faça o login aqui</Link>
 					</form>
 				</section>
 			</ContainerRegisterOwner>

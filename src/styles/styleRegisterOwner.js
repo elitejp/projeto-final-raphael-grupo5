@@ -1,26 +1,14 @@
-<<<<<<< HEAD
 import styled from "styled-components";
 
 const ContainerRegisterOwner = styled.div`
-=======
-import styled from 'styled-components'
-
-const Container = styled.div`
->>>>>>> 2250468 (feat: criação da pagina de registro do dono)
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
-<<<<<<< HEAD
 	font-family: "Inter";
 	background-color: var(--primary100);
 	font-family: "Inter", sans-serif;
-=======
-	font-family: 'Inter';
-	background-color: var(--primary100);
-	font-family: 'Inter', sans-serif;
->>>>>>> 2250468 (feat: criação da pagina de registro do dono)
 	section {
 		background-color: var(--grey300);
 		width: 90vw;
@@ -44,9 +32,11 @@ const Container = styled.div`
 	h3 {
 		font-size: 20px;
 	}
-	p {
+	p,
+	a {
 		font-size: 14px;
 		font-weight: 600;
+		color: var(--grey100);
 	}
 	span {
 		color: var(--secondary0);
@@ -58,40 +48,6 @@ const Container = styled.div`
 		gap: 20px;
 		width: 75%;
 	}
-	label {
-		font-size: 16px;
-		font-weight: 600;
-		padding-bottom: 10px;
-	}
-	input {
-		background-color: var(--grey200);
-<<<<<<< HEAD
-=======
-
->>>>>>> 2250468 (feat: criação da pagina de registro do dono)
-		padding: 13px;
-		border: none;
-		border-radius: 10px;
-	}
-	.error {
-		color: var(--negative);
-	}
-<<<<<<< HEAD
 `;
 
 export default ContainerRegisterOwner;
-=======
-
-	button {
-		background-color: var(--secondary100);
-		font-weight: 800;
-		border: none;
-		border-radius: 10px;
-		padding: 15px;
-		width: 60%;
-		cursor: pointer;
-	}
-`
-
-export default Container
->>>>>>> 2250468 (feat: criação da pagina de registro do dono)
