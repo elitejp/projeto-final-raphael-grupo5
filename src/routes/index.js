@@ -25,9 +25,11 @@ function Routes() {
         <Route exact path="/register-care">
           <RegisterCareGiver />
         </Route>
+        
         <Route exact path="/login-care">
           <LoginCuidador/>
         </Route>
+        
         <Route exact path="/login-dono">
           <LoginDono/>
         </Route>
@@ -48,4 +50,4 @@ function Routes() {
   );
 }
 
-export default Routes;
+export default Routes
