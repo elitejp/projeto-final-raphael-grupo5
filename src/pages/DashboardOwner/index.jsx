@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/Button";
 import { getOwnerAndPets } from "../../services/apiOwner";
 import UserHeader from "../../components/UserHeader";
+import Header from "../../components/Header";
 
 function DashboardOwner() {
   const [modalCreatePet, setmodalCreatePet] = useState(false);
@@ -50,6 +51,7 @@ function DashboardOwner() {
 
   return (
     <>
+      <Header />
       {modalCreatePet ? (
         <CreateModal>
           <StyledDiv fd="column">
