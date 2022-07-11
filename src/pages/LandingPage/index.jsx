@@ -112,7 +112,7 @@ function LandingPage() {
           w="360px"
         >
           <Text margintop="12px" fontsize="17px">
-            Como funcitona o site?
+            Como funciona o site?
           </Text>
           <Text
             marginleft="10px"
