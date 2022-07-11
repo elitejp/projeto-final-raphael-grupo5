@@ -9,8 +9,10 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/Button";
 import { getOwnerAndPets } from "../../services/apiOwner";
-import UserHeader from "../../components/UserHeader";
+
 import Header from "../../components/Header";
+import UserHeader from "../../components/UserHeader";
+import ListPets from "../../components/ListPets";
 
 function DashboardOwner() {
   const [modalCreatePet, setmodalCreatePet] = useState(false);
@@ -22,7 +24,9 @@ function DashboardOwner() {
 
     if (ownerToken) {
       const ownerId = localStorage.getItem("@iPet:owner-id");
-      setOwnerAndPets(getOwnerAndPets(ownerId));
+
+      getOwnerAndPets(ownerId, ownerToken).then((res) => setOwnerAndPets(res));
+
       return setAuthenticated(true);
     }
   }, [authenticated]);
@@ -119,10 +123,12 @@ function DashboardOwner() {
       )}
 
       <UserHeader
-        name={ownerAndPets.name}
+        name={ownerAndPets?.name}
         userType="owner"
         setmodalCreatePet={setmodalCreatePet}
       />
+
+      <ListPets pets={ownerAndPets?.pet} />
     </>
   );
 }
