@@ -7,6 +7,7 @@ import LoginCuidador from "../pages/Login_Cuidador";
 import LoginDono from "../pages/Login_Dono";
 import RegisterCareGiver from "../pages/RegisterCareGiver";
 import RegisterOwner from "../pages/RegisterOwner";
+import LandingPage from "../pages/LandingPage"
 
 function Routes() {
   const history = useHistory();
@@ -36,6 +37,10 @@ function Routes() {
 
         <Route exact path="/register-owner">
           <RegisterOwner />
+        </Route>
+
+        <Route exact path="/landing-page">
+          <LandingPage />
         </Route>
 
         <Route exact path="/dashboard-care">
