@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import RegisterCareGiver from "../pages/RegisterCareGiver";
 import RegisterOwner from "../pages/RegisterOwner";
+import LandingPage from "../pages/LandingPage"
 
 function Routes() {
   const history = useHistory();
@@ -26,6 +27,10 @@ function Routes() {
 
         <Route exact path="/register-owner">
           <RegisterOwner />
+        </Route>
+
+        <Route exact path="/landing-page">
+          <LandingPage />
         </Route>
 
         <Route exact path="/dashboard-care">
