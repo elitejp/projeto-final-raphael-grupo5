@@ -8,15 +8,18 @@ height:${(props)=>props.h||"auto"};
 margin:${(props)=>props.margin||"0 auto"};
 border-radius:${(props)=>props.br||"10px"};
 padding:${(props)=>props.p||"20px"};
+border:${(props)=>props.b};
 flex-direction:${(props)=>props.fd};
+justify-content:space-between;
 max-width:${(props)=>props.mw};
 gap:10px;
 `;
 
 export const StyledText= styled.p`
 color:${(props)=>props.color};
-font-size:${(props)=>props.fontsize};
-margin:${(props)=>props.margin};
+font-size:${(props)=>props.fz||"18px"};
+margin:${(props)=>props.m};
+font-weight:${(props)=>props.fw};
 
 `
 export const StyledForm= styled.form`

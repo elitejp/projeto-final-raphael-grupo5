@@ -4,12 +4,13 @@ export const Container = styled.button`
   background: ${(props) =>
     props.isGray ? "#C0C0C0" : props.notPrimary ? "#A4E3F0" : "#FA6900"};
   color: #000000;
-  height: 45px;
+  height: ${(props)=>props.h||"45px"};
   width: ${(props)=>props.w||"100%"};
   border-radius: 8px;
   border: 2px solid var(--Black);
   font-family: "Roboto mono", monospace;
   margin-top: 16px;
+  padding:${(props)=>props.p};
   transition: 0.5s;
   cursor: pointer;
   font-weight: 600;

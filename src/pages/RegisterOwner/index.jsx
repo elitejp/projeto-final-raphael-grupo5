@@ -47,7 +47,7 @@ function RegisterOwner() {
 			})
 			.catch((err) => {
 				let erro = err.response.data;
-				console.log(erro);
+				
 				if (erro === "Email already exists") {
 					toast.error("Email já existe!");
 				} else {

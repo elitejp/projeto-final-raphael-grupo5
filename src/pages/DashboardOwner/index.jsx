@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateModal from "../../components/Modals";
 import Input from "../../components/Input";
 import { StyledDiv,StyledText,StyledLabel,StyledForm,StyledInput } from "./styles";
@@ -8,11 +8,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {toast} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import Button from "../../components/Button";
+import Header from "../../components/Header";
+import { apiOwner } from "../../services";
 
 
 function DashboardOwner() {
 
-    const [MCpet , setMCpet] = useState(true)
+    const [MCpet , setMCpet] = useState(false)
 
     const formSchema=yup.object().shape({
       nome:yup.string().required("Escreva o nome do animal"),
@@ -24,24 +26,96 @@ function DashboardOwner() {
 
       
   })
-
+  const User = JSON.parse(localStorage.getItem("User"))
+  const Token =localStorage.getItem("Token")
+  const [Pets, setPets]= useState([])
+  useEffect(()=>{
+    apiOwner.get(`/pet?userId=${User.id}`,{
+      data:{
+  
+      },headers:{
+        "Authorization": `Bearer ${Token}`
+      }
+    }).then((res)=>setPets(res.data))
+    console.log(Pets)
+  
+  },[])
   function dados(dados){
     toast.success(`${dados.nome} foi cadastrado com sucesso` )
-
-    console.log(dados)
+    apiOwner.post(`/pet`,{
+      type: dados.tipo,
+      namePet: dados.nome,
+      userId:User.id,
+      obs_care: dados.obs_cuidado,
+      breed:dados.raca,
+      size:dados.porte,
+      age: dados.idade
+    },{
+      headers:{
+        "Authorization": `Bearer ${Token}`
+      }
+    })
     setMCpet(false)
   }
 
   const {register, handleSubmit, formState:{errors}}= useForm({resolver:yupResolver(formSchema)})
-
-
+  
+  
 
     return(
         <>
-        
+        <Header></Header>
+        <StyledDiv  fd="column"br="0" bc="#F1F1F1">
+         <StyledDiv bc="none" p="none" >
+          <StyledText >Dono dos pets:</StyledText>
+          <StyledText fw="bold">{User.name}</StyledText>
+         </StyledDiv>
+         <StyledDiv bc="none" p="none">
+          <Button onClick={()=>setMCpet(true)} w="auto" m="20px 0 0 auto" h="35px" p="0 5px">Adicionar pet </Button>
+         </StyledDiv>
+
+         <StyledDiv p="0"  bc="none">
+          <StyledLabel m="0" color="black">Pets cadastrados</StyledLabel>
+
+         </StyledDiv>
+         <StyledDiv bc="none" fd="column" b="3px solid #FA6900">
+            {Pets.length>0?Pets.map((elem,index)=>(
+              <StyledDiv fd="column" key={index} bc="#C2ECF5" p="0 10px 20px">
+              
+              <StyledText   fw="bold"> Pet: {elem.namePet}</StyledText>
+                 
+              <StyledDiv p="none" br="0">
+                <StyledText>Nome: </StyledText> <StyledText m="0 10px">{elem.namePet}</StyledText>
+              </StyledDiv>
+              <StyledDiv p="none" br="0">
+                <StyledText>Tipo de animal: </StyledText> <StyledText m="0 10px">{elem.type}</StyledText>
+              </StyledDiv>
+              <StyledDiv p="none" br="0">
+                <StyledText>Idade: </StyledText> <StyledText m="0 10px">{elem.age} Ano/s</StyledText>
+              </StyledDiv>
+              <StyledDiv p="none" br="0">
+                <StyledText>Porte físico: </StyledText> <StyledText m="0 10px">{elem.size}</StyledText>
+              </StyledDiv>
+              <StyledDiv p="none" br="0">
+                <StyledText>Raça: </StyledText> <StyledText m="0 10px">{elem.namePet}</StyledText>
+              </StyledDiv>
+
+              
+              </StyledDiv>
+              
+                  
+            )):""}
+
+
+         </StyledDiv>
+          
+
+
+        </StyledDiv>
+
 
         {MCpet===true?<CreateModal>
-          <StyledDiv fd="column">
+          <StyledDiv margin="none"  fd="column">
 
             <StyledForm onSubmit={handleSubmit(dados)}>
             <StyledDiv fd="column">
