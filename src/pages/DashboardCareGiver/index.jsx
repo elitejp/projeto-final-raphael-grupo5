@@ -31,7 +31,52 @@ function DashboardCareGiver() {
 					toast.error("Seu login expirou! logue novamente.");
 				}
 			});
-	}, [user.id, token]);
+	}, [user.id, token, requests]);
+
+	function deleteRequest(id) {
+		apiCare
+			.delete(`/request/${id}`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((res) => {
+				console.log(res);
+				toast.success("Recusado com sucesso!");
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error("Algo deu errado!");
+			});
+	}
+
+	function acceptRequest(data) {
+		const user = {
+			email: data.email,
+			name: data.name,
+			telefone: data.telefone,
+			age: data.age,
+			data_final: data.data_final,
+			data_inicial: data.data_inicial,
+			userId: data.userId,
+			pet: data.pet,
+		};
+
+		apiCare
+			.post("/accepted", user, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((res) => {
+				console.log(res);
+				toast.success("Aceito com sucesso!");
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error("Algo deu errado!");
+			});
+	}
 
 	return (
 		<>
@@ -51,8 +96,8 @@ function DashboardCareGiver() {
 					<p>Donos interessados</p>
 					<ul className="infoOwners">
 						{showRequests ? (
-							requests.map((el) => (
-								<li>
+							requests.map((el, index) => (
+								<li key={el.name + index}>
 									<div>
 										<p>Nome do dono:</p>
 										<p>{el.name}</p>
@@ -63,46 +108,54 @@ function DashboardCareGiver() {
 									</div>
 
 									<div>
-										<p>Dias necessários:</p>
-										<p>Não tem na API</p>
+										<p>Data inicial:</p>
+										<p>{el.data_inicial || "Sem informação"}</p>
+									</div>
+									<div>
+										<p>Data final:</p>
+										<p>{el.data_final || "Sem informação"}</p>
 									</div>
 									<div>
 										<p>Telefone de contato:</p>
-										<p>Não tem na API</p>
+										<p>{el.telefone || "Sem informação"}</p>
 									</div>
 									<ul className="infoPets">
-										{el.pet?.map((el) => (
-											<li>
-												<h3>Pet: {el.nome}</h3>
+										{el.pet?.map((el, index) => (
+											<li key={index}>
+												<h3>Pet: {el.nome || "Sem informação"}</h3>
 												<div>
 													<p>Nome:</p>
-													<p>{el.nome}</p>
+													<p>{el.nome || "Sem informação"}</p>
 												</div>
 												<div>
 													<p>Tipo de animal:</p>
-													<p>{el.tipo}</p>
+													<p>{el.tipo || "Sem informação"}</p>
 												</div>
 												<div>
 													<p>Idade:</p>
-													<p>{el.idade}</p>
+													<p>{el.idade || "Sem informação"}</p>
 												</div>
 												<div>
 													<p>Porte físico:</p>
-													<p>{el.porte_físico}</p>
+													<p>{el.porte_físico || "Sem informação"}</p>
 												</div>
 												<div>
 													<p>Raça:</p>
-													<p>{el.raca}</p>
+													<p>{el.raca || "Sem informação"}</p>
 												</div>
 												<div className="obsPet">
 													<p>Observações e cuidados:</p>
-													<p>{el.observações_cuidados}</p>
+													<p>{el.observações_cuidados || "Sem informação"}</p>
 												</div>
 											</li>
 										))}
 									</ul>
-									<Button>Aceitar</Button>
-									<Button>Recusar</Button>
+									<div className="buttons">
+										<Button onClick={() => acceptRequest(el)}>Aceitar</Button>
+										<Button onClick={() => deleteRequest(el.id)}>
+											Recusar
+										</Button>
+									</div>
 								</li>
 							))
 						) : (

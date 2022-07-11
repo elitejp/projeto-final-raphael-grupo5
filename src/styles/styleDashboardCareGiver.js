@@ -34,7 +34,9 @@ const ContainerDashboardCareGiver = styled.div`
 		border: 4px solid var(--secondary100);
 		border-radius: 4px;
 		display: flex;
+		flex-direction: column;
 		padding: 10px;
+		gap: 30px;
 
 		li {
 			display: flex;
@@ -73,6 +75,13 @@ const ContainerDashboardCareGiver = styled.div`
 			flex-direction: column;
 			gap: 5px;
 		}
+	}
+
+	.buttons {
+		display: flex;
+		gap: 20px;
+		justify-content: space-between;
+		padding: 10px;
 	}
 
 	@media (min-width: 600px) {
