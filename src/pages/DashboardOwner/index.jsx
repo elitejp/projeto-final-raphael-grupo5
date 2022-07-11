@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CreateModal from "../../components/Modals";
 import Input from "../../components/Input";
-import { StyledDiv, StyledLabel, StyledForm } from "./styles";
+import { StyledDiv, StyledLabel, StyledForm, StyledText } from "./styles";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,6 +19,7 @@ function DashboardOwner() {
   const ownerToken = localStorage.getItem("Token");
   const ownerId = JSON.parse(localStorage.getItem("User"))
   const [modalCreatePet, setmodalCreatePet] = useState(false);
+  const [modalDeletePet, setmodalDeletePet] = useState(false)
   const [authenticated, setAuthenticated] = useState(false);
   const [ownerAndPets, setOwnerAndPets] = useState({});
   const [modalEditPet,setmodalEditPet] = useState(false)
@@ -103,7 +104,24 @@ function DashboardOwner() {
     
 
   }
+  function deletarCard(id){
+    console.log(id)
+    
+    apiOwner.delete(`/pet/${id}`,{
+      headers:{
+        "Authorization": `Bearer ${ownerToken}`
+      }
+    })
+    toast.success("Excluido com sucesso")
+    setTemp({})
+    setmodalDeletePet(false)
+    
+  }
   function modalDeletar(dados){
+    console.log(dados)
+    setTemp(dados)
+    setmodalDeletePet(true)
+    
 
   }
 
@@ -111,6 +129,33 @@ function DashboardOwner() {
     <>
     
       <Header />
+      {modalDeletePet?
+      <CreateModal>
+
+      <StyledDiv fd="column">
+            
+              <StyledLabel color="black" we="bold"  m="0 auto" >
+                Você quer mesmo excluir o pet: <StyledText margin="0 auto" fontsize="20px" ta="center">{Temp.name}?</StyledText> 
+              </StyledLabel>
+              <StyledDiv>
+                <Button onClick={()=>deletarCard(Temp.id)} type="submit" w="40%">
+                  Excluir
+                </Button>
+                <Button
+                  onClick={(e) => {
+                    setmodalDeletePet(false);
+                    setTemp({})
+                  }}
+                  w="40%"
+                  isGray
+                >
+                  Cancelar
+                </Button>
+              </StyledDiv>
+            
+          </StyledDiv>
+          </CreateModal>
+      :""}
       {modalEditPet?<CreateModal>
         
 
