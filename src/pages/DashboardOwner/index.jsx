@@ -20,12 +20,12 @@ function DashboardOwner() {
   const [ownerAndPets, setOwnerAndPets] = useState({});
 
   useEffect(() => {
-    const ownerToken = localStorage.getItem("@iPet:owner-token");
+    const ownerToken = localStorage.getItem("Token");
 
     if (ownerToken) {
-      const ownerId = localStorage.getItem("@iPet:owner-id");
+      const ownerId = JSON.parse(localStorage.getItem("User"))
 
-      getOwnerAndPets(ownerId, ownerToken).then((res) => setOwnerAndPets(res));
+      getOwnerAndPets(ownerId.id, ownerToken).then((res) => setOwnerAndPets(res));
 
       return setAuthenticated(true);
     }
