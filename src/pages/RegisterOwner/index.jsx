@@ -14,6 +14,7 @@ function RegisterOwner() {
 		name: yup.string().required("Campo obrigatório").min(3, "Minimo de 3 letras"),
 		age: yup.string().required("Campo obrigatório"),
 		email: yup.string().required("Campo obrigatório").email("E-mail inválido"),
+		telefone: yup.string().required("Campo obrigatório").min(9, "Minimo de 9 digitos"),
 		password: yup.string().required("Campo obrigatório").min(6, "Minimo de 6 letras"),
 		confirmPassword: yup
 			.string()
@@ -31,11 +32,12 @@ function RegisterOwner() {
 	});
 
 	const onSubmit = (data) => {
-		const { email, password, name, age } = data;
+		const { email, password, name, telefone, age } = data;
 		const user = {
 			email: email,
 			password: password,
 			name: name,
+			telefone: telefone,
 			age: age,
 		};
 
@@ -93,6 +95,14 @@ function RegisterOwner() {
 							register={register}
 							name="email"
 							error={errors.email?.message}
+						/>
+						<Input
+							isGray
+							label="Telefone"
+							placeholder="Digite seu email"
+							register={register}
+							name="telefone"
+							error={errors.telefone?.message}
 						/>
 
 						<Input
