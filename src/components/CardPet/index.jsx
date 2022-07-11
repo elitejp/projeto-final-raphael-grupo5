@@ -2,13 +2,13 @@ import Button from "../Button";
 import { StyledCardPet, StyledDiv} from "./styles";
 
 
-function CardPet({ pet, modalEditar ,modalDeletar}) {
+function CardPet({ pet,id, modalEditar ,modalDeletar}) {
 
   
   return (
     <StyledCardPet>
-      {console.log((pet))}
-      <h2>{pet.namePet}</h2>
+      
+      <h2>{pet.name}</h2>
 
       <div className="data-box">
         <h3>Tipo:</h3>
@@ -36,8 +36,8 @@ function CardPet({ pet, modalEditar ,modalDeletar}) {
       </div>
 
       <div className="divbtn">
-        <button onClick={()=>modalDeletar(pet)}>Deletar</button>
-        <button onClick={()=>modalEditar(pet)}>Editar</button>
+        <button onClick={()=>modalDeletar(pet,id)}>Deletar</button>
+        <button onClick={()=>modalEditar(pet,id)}>Editar</button>
       </div>
         
      
