@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
 function DashboardCareGiver() {
-	const history = useHistory();
+  const history = useHistory();
   const token = localStorage.getItem("Token");
   const user = JSON.parse(localStorage.getItem("User"));
   const [requests, setRequests] = useState([]);
@@ -56,10 +56,10 @@ function DashboardCareGiver() {
     const user = {
       email: data.email,
       name: data.name,
-      telefone: data.telefone,
+      telephone: data.telephone,
       age: data.age,
-      data_final: data.data_final,
-      data_inicial: data.data_inicial,
+      initial_date: data.initial_date,
+      final_date: data.final_date,
       userId: data.userId,
       pet: data.pet,
     };
@@ -73,6 +73,7 @@ function DashboardCareGiver() {
       .then((res) => {
         console.log(res);
         toast.success("Aceito com sucesso!");
+        deleteRequest(data.id);
       })
       .catch((err) => {
         console.log(err);
@@ -85,7 +86,9 @@ function DashboardCareGiver() {
       <Header />
       <ContainerDashboardCareGiver>
         <div className="container">
-          <Button isGray onClick={() => history.push("/home-care")}>Home</Button>
+          <Button isGray onClick={() => history.push("/home-care")}>
+            Home
+          </Button>
           <div className="infoCaregiver">
             <h2>Cuidador</h2>
             <div>
@@ -112,43 +115,43 @@ function DashboardCareGiver() {
 
                   <div>
                     <p>Data inicial:</p>
-                    <p>{el.data_inicial || "Sem informação"}</p>
+                    <p>{el.final_date || "Sem informação"}</p>
                   </div>
                   <div>
                     <p>Data final:</p>
-                    <p>{el.data_final || "Sem informação"}</p>
+                    <p>{el.initial_date || "Sem informação"}</p>
                   </div>
                   <div>
-                    <p>Telefone de contato:</p>
-                    <p>{el.telefone || "Sem informação"}</p>
+                    <p>telephone de contato:</p>
+                    <p>{el.telephone || "Sem informação"}</p>
                   </div>
                   <ul className="infoPets">
                     {el.pet?.map((el, index) => (
                       <li key={index}>
-                        <h3>Pet: {el.nome || "Sem informação"}</h3>
+                        <h3>Pet: {el.name || "Sem informação"}</h3>
                         <div>
                           <p>Nome:</p>
-                          <p>{el.nome || "Sem informação"}</p>
+                          <p>{el.name || "Sem informação"}</p>
                         </div>
                         <div>
                           <p>Tipo de animal:</p>
-                          <p>{el.tipo || "Sem informação"}</p>
+                          <p>{el.type || "Sem informação"}</p>
                         </div>
                         <div>
                           <p>Idade:</p>
-                          <p>{el.idade || "Sem informação"}</p>
+                          <p>{el.age || "Sem informação"}</p>
                         </div>
                         <div>
                           <p>Porte físico:</p>
-                          <p>{el.porte_físico || "Sem informação"}</p>
+                          <p>{el.physical_shape || "Sem informação"}</p>
                         </div>
                         <div>
                           <p>Raça:</p>
-                          <p>{el.raca || "Sem informação"}</p>
+                          <p>{el.breed || "Sem informação"}</p>
                         </div>
                         <div className="obsPet">
                           <p>Observações e cuidados:</p>
-                          <p>{el.observações_cuidados || "Sem informação"}</p>
+                          <p>{el.note || "Sem informação"}</p>
                         </div>
                       </li>
                     ))}

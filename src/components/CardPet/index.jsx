@@ -27,12 +27,12 @@ function CardPet({ pet,id, modalEditar ,modalDeletar}) {
 
       <div className="data-box">
         <h3>Porte:</h3>
-        <p>{pet.size}</p>
+        <p>{pet.physical_shape}</p>
       </div>
 
       <div className="obs-box">
         <h3>Observações e cuidados:</h3>
-        <p>{pet.obs_care}</p>
+        <p>{pet.note}</p>
       </div>
 
       <div className="divbtn">
