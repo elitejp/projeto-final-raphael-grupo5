@@ -9,9 +9,7 @@ function Home() {
   const [careGivers, setCareGivers] = useState([]);
 
   useEffect(() => {
-    const careToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtlbnppbmhvQG1haWwuY29tIiwiaWF0IjoxNjU3NjQwMjY4LCJleHAiOjE2NTc2NDM4NjgsInN1YiI6IjEifQ.fKsD_GcxJkOvnfn3dNQ-gtXnNTPQP47_48u609sEzwY";
-    //localStorage.getItem("Token");
+    const careToken = localStorage.getItem("Token");
 
     if (careToken) {
       getCareGiver(careToken).then((res) => setCareGivers(res));
