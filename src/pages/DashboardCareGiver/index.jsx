@@ -4,12 +4,29 @@ import { apiCare } from "../../services";
 import ContainerDashboardCareGiver from "../../styles/styleDashboardCareGiver";
 import Button from "../../components/Button";
 import { toast } from "react-toastify";
+import CreateModal from "../../components/Modals";
+import StyleModalDashboardcare from "../../styles/styleModalDashboardCare";
 
 function DashboardCareGiver() {
 	const token = localStorage.getItem("Token");
 	const user = JSON.parse(localStorage.getItem("User"));
+
 	const [requests, setRequests] = useState([]);
-	const [showRequests, setShowRequests] = useState(false);
+	const [haveRequests, setHaveRequests] = useState(false);
+
+	const [accepted, setAccepted] = useState([]);
+	const [haveAccepted, setHaveAccepted] = useState(false);
+
+	const [showRequest, setShowRequest] = useState(true);
+	const [showAccepted, setShowAccepted] = useState(false);
+
+	const [modalExclude, setModalExclude] = useState(false);
+	const [modalAccept, setModalAccept] = useState(false);
+	const [modalDelete, setModalDelete] = useState(false);
+
+	const [idExclude, setIdExclude] = useState("");
+	const [elAccept, setElAccept] = useState("");
+	const [elIdDelete, setElIdDelete] = useState("");
 
 	useEffect(() => {
 		apiCare
@@ -21,9 +38,9 @@ function DashboardCareGiver() {
 			.then((response) => {
 				setRequests(response.data.request);
 				if (response.data.request.length === 0) {
-					setShowRequests(false);
+					setHaveRequests(false);
 				} else {
-					setShowRequests(true);
+					setHaveRequests(true);
 				}
 			})
 			.catch((err) => {
@@ -33,7 +50,8 @@ function DashboardCareGiver() {
 			});
 	}, [user.id, token, requests]);
 
-	function deleteRequest(id) {
+	function deleteRequest(id, verify) {
+		setModalDelete(false);
 		apiCare
 			.delete(`/request/${id}`, {
 				headers: {
@@ -41,8 +59,9 @@ function DashboardCareGiver() {
 				},
 			})
 			.then((res) => {
-				console.log(res);
-				toast.success("Recusado com sucesso!");
+				if (verify !== "accept") {
+					toast.success("Recusado com sucesso!");
+				}
 			})
 			.catch((err) => {
 				console.log(err);
@@ -51,13 +70,14 @@ function DashboardCareGiver() {
 	}
 
 	function acceptRequest(data) {
+		setModalAccept(false);
 		const user = {
 			email: data.email,
 			name: data.name,
-			telefone: data.telefone,
+			telephone: data.telephone,
 			age: data.age,
-			data_final: data.data_final,
-			data_inicial: data.data_inicial,
+			initial_date: data.initial_date,
+			final_date: data.final_date,
 			userId: data.userId,
 			pet: data.pet,
 		};
@@ -76,10 +96,97 @@ function DashboardCareGiver() {
 				console.log(err);
 				toast.error("Algo deu errado!");
 			});
+
+		deleteRequest(data.id, "accept");
+	}
+
+	useEffect(() => {
+		apiCare
+			.get(`/users/${user.id}?_embed=accepted`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((response) => {
+				setAccepted(response.data.accepted);
+				if (response.data.accepted.length === 0) {
+					setHaveAccepted(false);
+				} else {
+					setHaveAccepted(true);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [token, user.id, accepted]);
+
+	function excludeService(id) {
+		setModalExclude(false);
+		apiCare
+			.delete(`/accepted/${id}`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((response) => {
+				console.log(response);
+				toast.success("Finalizado com sucesso!");
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error("Ops, algo deu errado!");
+			});
 	}
 
 	return (
 		<>
+			{modalExclude ? (
+				<CreateModal>
+					<StyleModalDashboardcare>
+						<p>Tem certezar que deseja finalizar o pedido?</p>
+						<div className="buttons">
+							<Button isGray onClick={() => setModalExclude(false)}>
+								Cancelar
+							</Button>
+							<Button onClick={() => excludeService(idExclude)}>
+								Finalizar
+							</Button>
+						</div>
+					</StyleModalDashboardcare>
+				</CreateModal>
+			) : (
+				<></>
+			)}
+			{modalAccept ? (
+				<CreateModal>
+					<StyleModalDashboardcare>
+						<p>Tem certezar que deseja aceitar o pedido?</p>
+						<div className="buttons">
+							<Button isGray onClick={() => setModalAccept(false)}>
+								Cancelar
+							</Button>
+							<Button onClick={() => acceptRequest(elAccept)}>Aceitar</Button>
+						</div>
+					</StyleModalDashboardcare>
+				</CreateModal>
+			) : (
+				<></>
+			)}
+			{modalDelete ? (
+				<CreateModal>
+					<StyleModalDashboardcare>
+						<p>Tem certezar que deseja cancelar o pedido?</p>
+						<div className="buttons">
+							<Button isGray onClick={() => setModalDelete(false)}>
+								Cancelar
+							</Button>
+							<Button onClick={() => deleteRequest(elIdDelete)}>Deletar</Button>
+						</div>
+					</StyleModalDashboardcare>
+				</CreateModal>
+			) : (
+				<></>
+			)}
 			<Header />
 			<ContainerDashboardCareGiver>
 				<div className="container">
@@ -88,80 +195,194 @@ function DashboardCareGiver() {
 						<div>
 							<p>{user.name}</p>
 							<img
-								src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+								src="https://2021.ieee-laus.org/wp-content/uploads/sites/48/2021/09/coming-soon.jpg"
 								alt="perfil"
 							/>
 						</div>
 					</div>
-					<p>Donos interessados</p>
-					<ul className="infoOwners">
-						{showRequests ? (
-							requests.map((el, index) => (
-								<li key={el.name + index}>
-									<div>
-										<p>Nome do dono:</p>
-										<p>{el.name}</p>
-									</div>
-									<div>
-										<p>Número de pets:</p>
-										<p>{el.pet.length}</p>
-									</div>
+					<div className="buttons">
+						<Button
+							isGray={!showRequest}
+							onClick={() => {
+								setShowRequest(true);
+								setShowAccepted(false);
+							}}
+						>
+							Donos interessados
+						</Button>
+						<Button
+							isGray={!showAccepted}
+							onClick={() => {
+								setShowAccepted(true);
+								setShowRequest(false);
+							}}
+						>
+							Pedidos aceitos
+						</Button>
+					</div>
+					{showRequest ? (
+						<>
+							<ul className="infoOwners">
+								{haveRequests ? (
+									requests.map((el, index) => (
+										<li key={el.name + index}>
+											<div>
+												<p>Nome do dono:</p>
+												<p>{el.name}</p>
+											</div>
+											<div>
+												<p>Número de pets:</p>
+												<p>{el.pet.length}</p>
+											</div>
 
-									<div>
-										<p>Data inicial:</p>
-										<p>{el.data_inicial || "Sem informação"}</p>
-									</div>
-									<div>
-										<p>Data final:</p>
-										<p>{el.data_final || "Sem informação"}</p>
-									</div>
-									<div>
-										<p>Telefone de contato:</p>
-										<p>{el.telefone || "Sem informação"}</p>
-									</div>
-									<ul className="infoPets">
-										{el.pet?.map((el, index) => (
-											<li key={index}>
-												<h3>Pet: {el.nome || "Sem informação"}</h3>
-												<div>
-													<p>Nome:</p>
-													<p>{el.nome || "Sem informação"}</p>
-												</div>
-												<div>
-													<p>Tipo de animal:</p>
-													<p>{el.tipo || "Sem informação"}</p>
-												</div>
-												<div>
-													<p>Idade:</p>
-													<p>{el.idade || "Sem informação"}</p>
-												</div>
-												<div>
-													<p>Porte físico:</p>
-													<p>{el.porte_físico || "Sem informação"}</p>
-												</div>
-												<div>
-													<p>Raça:</p>
-													<p>{el.raca || "Sem informação"}</p>
-												</div>
-												<div className="obsPet">
-													<p>Observações e cuidados:</p>
-													<p>{el.observações_cuidados || "Sem informação"}</p>
-												</div>
-											</li>
-										))}
-									</ul>
-									<div className="buttons">
-										<Button onClick={() => acceptRequest(el)}>Aceitar</Button>
-										<Button onClick={() => deleteRequest(el.id)}>
-											Recusar
-										</Button>
-									</div>
-								</li>
-							))
-						) : (
-							<p>Você ainda não possui requisições!</p>
-						)}
-					</ul>
+											<div>
+												<p>Data inicial:</p>
+												<p>{el.initial_date || "Sem informação"}</p>
+											</div>
+											<div>
+												<p>Data final:</p>
+												<p>{el.final_date || "Sem informação"}</p>
+											</div>
+											<div>
+												<p>Telefone de contato:</p>
+												<p>{el.telephone || "Sem informação"}</p>
+											</div>
+											<ul className="infoPets">
+												{el.pet?.map((el, index) => (
+													<li key={index}>
+														<h3>Pet: {el.name || "Sem informação"}</h3>
+														<div>
+															<p>Nome:</p>
+															<p>{el.name || "Sem informação"}</p>
+														</div>
+														<div>
+															<p>Tipo de animal:</p>
+															<p>{el.type || "Sem informação"}</p>
+														</div>
+														<div>
+															<p>Idade:</p>
+															<p>{el.age || "Sem informação"}</p>
+														</div>
+														<div>
+															<p>Porte físico:</p>
+															<p>{el.physical_shape || "Sem informação"}</p>
+														</div>
+														<div>
+															<p>Raça:</p>
+															<p>{el.breed || "Sem informação"}</p>
+														</div>
+														<div className="obsPet">
+															<p>Observações e cuidados:</p>
+															<p>{el.note || "Sem informação"}</p>
+														</div>
+													</li>
+												))}
+											</ul>
+											<div className="buttons">
+												<Button
+													onClick={() => {
+														setElAccept(el);
+														setModalAccept(true);
+													}}
+												>
+													Aceitar
+												</Button>
+												<Button
+													onClick={() => {
+														setElIdDelete(el.id);
+														setModalDelete(true);
+													}}
+												>
+													Recusar
+												</Button>
+											</div>
+										</li>
+									))
+								) : (
+									<p>Você ainda não possui requisições!</p>
+								)}
+							</ul>
+						</>
+					) : (
+						<></>
+					)}
+
+					{showAccepted ? (
+						<ul className="infoOwners">
+							{haveAccepted ? (
+								accepted.map((el, index) => (
+									<li key={el.name + index}>
+										<div>
+											<p>Nome do dono:</p>
+											<p>{el.name}</p>
+										</div>
+										<div>
+											<p>Número de pets:</p>
+											<p>{el.pet.length}</p>
+										</div>
+
+										<div>
+											<p>Data inicial:</p>
+											<p>{el.initial_date || "Sem informação"}</p>
+										</div>
+										<div>
+											<p>Data final:</p>
+											<p>{el.final_date || "Sem informação"}</p>
+										</div>
+										<div>
+											<p>Telefone de contato:</p>
+											<p>{el.telephone || "Sem informação"}</p>
+										</div>
+										<ul className="infoPets">
+											{el.pet?.map((el, index) => (
+												<li key={index}>
+													<h3>Pet: {el.name || "Sem informação"}</h3>
+													<div>
+														<p>Nome:</p>
+														<p>{el.name || "Sem informação"}</p>
+													</div>
+													<div>
+														<p>Tipo de animal:</p>
+														<p>{el.type || "Sem informação"}</p>
+													</div>
+													<div>
+														<p>Idade:</p>
+														<p>{el.age || "Sem informação"}</p>
+													</div>
+													<div>
+														<p>Porte físico:</p>
+														<p>{el.physical_shape || "Sem informação"}</p>
+													</div>
+													<div>
+														<p>Raça:</p>
+														<p>{el.breed || "Sem informação"}</p>
+													</div>
+													<div className="obsPet">
+														<p>Observações e cuidados:</p>
+														<p>{el.note || "Sem informação"}</p>
+													</div>
+												</li>
+											))}
+										</ul>
+										<div className="buttons">
+											<Button
+												onClick={() => {
+													setIdExclude(el.id);
+													setModalExclude(true);
+												}}
+											>
+												Finalizar
+											</Button>
+										</div>
+									</li>
+								))
+							) : (
+								<p>Você ainda não possui requisições!</p>
+							)}
+						</ul>
+					) : (
+						<></>
+					)}
 				</div>
 			</ContainerDashboardCareGiver>
 		</>
