@@ -24,7 +24,11 @@ display:${(props)=>props.display};
 width:${(props)=>props.w};
 height:${(props)=>props.h||"auto"};
 flex-direction:${(props)=>props.fd};
-
+ .span-loading{
+    color: white;
+    margin: 0 auto;
+    margin-top: 15px;
+ }
 
 `
 export const StyledLabel= styled.label`

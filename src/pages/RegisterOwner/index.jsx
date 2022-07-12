@@ -8,14 +8,16 @@ import { apiOwner } from "../../services/index.js";
 import Button from "../../components/Button/index.jsx";
 import Input from "../../components/Input/index.jsx";
 import { Link, useHistory } from "react-router-dom";
+import { useState } from "react";
 
 function RegisterOwner() {
 	const history= useHistory()
+	const [loading, setLoading] = useState(false)
 	const schema = yup.object().shape({
 		name: yup.string().required("Campo obrigatório").min(3, "Minimo de 3 letras"),
 		age: yup.string().required("Campo obrigatório"),
 		email: yup.string().required("Campo obrigatório").email("E-mail inválido"),
-		telefone: yup.string().required("Campo obrigatório").min(9, "Minimo de 9 digitos"),
+		telephone: yup.string().required("Campo obrigatório").min(9, "Minimo de 9 digitos"),
 		password: yup.string().required("Campo obrigatório").min(6, "Minimo de 6 letras"),
 		confirmPassword: yup
 			.string()
@@ -33,15 +35,16 @@ function RegisterOwner() {
 	});
 
 	const onSubmit = (data) => {
-		const { email, password, name, telefone, age } = data;
+		const { email, password, name, telephone, age } = data;
 		const user = {
 			email: email,
 			password: password,
 			name: name,
-			telefone: telefone,
+			telephone: telephone,
 			age: age,
 		};
 
+		setLoading(true)
 		apiOwner
 			.post("/register", user)
 			.then((response) => {
@@ -57,6 +60,8 @@ function RegisterOwner() {
 				} else {
 					toast.error("Ops! Algo deu errado");
 				}
+			}).finally(() => {
+				setLoading(false)
 			});
 			
 	};
@@ -101,11 +106,11 @@ function RegisterOwner() {
 						/>
 						<Input
 							isGray
-							label="Telefone"
+							label="telephone"
 							placeholder="Digite seu email"
 							register={register}
-							name="telefone"
-							error={errors.telefone?.message}
+							name="telephone"
+							error={errors.telephone?.message}
 						/>
 
 						<Input
@@ -128,6 +133,7 @@ function RegisterOwner() {
 							error={errors.confirmPassword?.message}
 						/>
 
+						{loading && <p className="span-loading">CARREGANDO...</p>}
 						<Button type="submit">Cadastre-se</Button>
 						<Link to={"/login-dono"}>Já possui conta? Faça o login aqui</Link>
 					</form>

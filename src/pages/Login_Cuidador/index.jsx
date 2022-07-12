@@ -16,15 +16,20 @@ import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { apiCare } from "../../services";
+import { useState } from "react";
+import Loading from "../../components/Loading";
 
 function LoginCuidador() {
   const history = useHistory();
+  const [loading, setLoading] = useState(false)
 
   function dados(dados) {
     const data = {
       email: dados.email,
       password: dados.password,
     };
+
+    setLoading(true)
     
     apiCare.post("/login", data).then((res) => {
       
@@ -42,6 +47,8 @@ function LoginCuidador() {
             toast.error(err.response?.data)
 
         
+    }).finally(() => {
+      setLoading(false)
     })
 
   }
@@ -120,9 +127,10 @@ function LoginCuidador() {
             {errors.password?.message}
           </StyledLabel>
 
+          {loading && <p className="span-loading">CARREGANDO...</p>}
           <Button m="30px auto" w="50%" type="submit">
             Fazer login
-          </Button>
+          </Button>          
         </StyledForm>
 
         <StyledText margin="0 auto auto  " color="gray">

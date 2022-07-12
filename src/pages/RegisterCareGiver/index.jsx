@@ -9,22 +9,26 @@ import {toast} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import { useState } from "react";
 
 function RegisterCareGiver() {
 const baseURL = "https://caregiver-and-pets.herokuapp.com";
     const history= useHistory()
+    const [loading, setLoading] = useState(false)
     function dados(dados){
         
-
+        setLoading(true)
         const data={
             email:dados.email,
-            name:dados.nome,
+            name:dados.name,
             password:dados.senha,
             telefone: dados.telefone,
-            endereco: dados.endereco,
-            tipo_moradia: dados.tipo_moradia,
-            alimento: dados.alimento,
-            treinamento: dados.treinamento
+            address: dados.address,
+            type_house: dados.type_house,
+            food: dados.food,
+            istraining: dados.istraining,
+            price: dados.price,
+            detail: dados.detail
         }
         
         axios.post(baseURL+"/register",data)
@@ -38,21 +42,24 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
             
         }).catch((res)=>{console.log(res)
             toast.error(res.response?.data)
+        }).finally(() => {
+            setLoading(false)
         })
 
     }
 
      const formSchema=yup.object().shape({
-        nome: yup.string().required("Nome obrigatório"),
+        name: yup.string().required("Nome obrigatório"),
         email: yup.string().required("Email necessário").email("email inválido"),
         senha:yup.string().required("Senha Obrigatória").matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/, 'A senha deve conter pelo menos um simbulo e um numero e uma letra em maiusculo e outra em minusculo, támbem deve conter 8 ou mais caracteres'),
         telefone:yup.string().required("Telefone obrigatório").matches(/^1\d\d(\d\d)?$|^0800 ?\d{3} ?\d{4}$|^(\(0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d\) ?|0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d[ .-]?)?(9|9[ .-])?[2-9]\d{3}[ .-]?\d{4}$/,"Telefone inválido"),
-        endereco:yup.string().required("Endereço obrigatório"),
+        address:yup.string().required("Endereço obrigatório"),
         cpf:yup.string().required("Cpf necessário").matches(/^[0-9]{3}.?[0-9]{3}.?[0-9]{3}-?[0-9]{2}/,"cpf inválido"),
-        tipo_moradia:yup.string().required("Tipo de moradia necessário"),
-        alimento:yup.boolean(),
-        preco:yup.string().required("Especifique um valor"),
-        treinamento:yup.boolean()
+        type_house:yup.string().required("Tipo de moradia necessário"),
+        food:yup.boolean(),
+        price:yup.string().required("Especifique um valor"),
+        detail:yup.string().required("Falo um pouco sobre você"),
+        istraining:yup.boolean()
     })
 
     const {register, handleSubmit, formState:{errors}}= useForm({resolver:yupResolver(formSchema)})
@@ -73,9 +80,9 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
               </StyledDiv>
               <StyledForm  onSubmit={handleSubmit(dados)} display="flex" fd="column" w="80%" margin="20px auto" dfd="column">
 
-                    <StyledLabel>Nome</StyledLabel>
-                    <Input placeholder="Digite seu nome" register = {register} name="nome"/>
-                    <StyledLabel color="pink" m="0">{errors.nome?.message}</StyledLabel>
+                    <StyledLabel>name</StyledLabel>
+                    <Input placeholder="Digite seu name" register = {register} name="name"/>
+                    <StyledLabel color="pink" m="0">{errors.name?.message}</StyledLabel>
             
                     <StyledLabel>Email</StyledLabel>
                     <Input type="text" placeholder="Digite seu Email" h="40px"register = {register} name="email"/>
@@ -91,8 +98,8 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
                     <StyledLabel color="pink" m="0">{errors.telefone?.message}</StyledLabel>
 
                     <StyledLabel>Endereço</StyledLabel>
-                    <Input placeholder="Digite seu Endereço" h="40px" name="endereco" register = {register} />
-                    <StyledLabel color="pink" m="0">{errors.endereco?.message}</StyledLabel>
+                    <Input placeholder="Digite seu Endereço" h="40px" name="address" register = {register} />
+                    <StyledLabel color="pink" m="0">{errors.address?.message}</StyledLabel>
                      
                     <StyledLabel>CPF</StyledLabel>
                     <Input placeholder="Digite seu CPF" h="40px" name="cpf"  register = {register}/>
@@ -100,19 +107,23 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
 
 
                     <StyledLabel>Tipo de moradia</StyledLabel>
-                    <Input placeholder="Especifique o tipo" h="40px" register = {register} name="tipo_moradia"/>
-                    <StyledLabel color="pink" m="0">{errors.tipo_moradia?.message}</StyledLabel>
+                    <Input placeholder="Especifique o tipo" h="40px" register = {register} name="type_house"/>
+                    <StyledLabel color="pink" m="0">{errors.type_house?.message}</StyledLabel>
 
                     <StyledLabel>Preço Dia/hora</StyledLabel>
-                    <Input placeholder="Digite o preço por dia e hora" h="40px" register = {register} name="preco"/>
-                    <StyledLabel color="pink" m="0">{errors.preco?.message}</StyledLabel>
+                    <Input placeholder="Digite o preço por dia e hora" h="40px" register = {register} name="price"/>
+                    <StyledLabel color="pink" m="0">{errors.price?.message}</StyledLabel>
+                    
+                    <StyledLabel>Detalhes sobre você</StyledLabel>
+                    <Input placeholder="Conte um pouco sobre você" h="40px" register = {register} name="detail"/>
+                    <StyledLabel color="pink" m="0">{errors.detail?.message}</StyledLabel>
                      
 
-                    <StyledLabel>Provê alimento do Pet?  <StyledInput type="checkbox" width="20px" {...register("alimento")} ></StyledInput> </StyledLabel>
-                    <StyledLabel>Possui algum tipo de treinamento ou curso na área?  <StyledInput type="checkbox" width="20px" {...register("treinamento")}></StyledInput> </StyledLabel>
+                    <StyledLabel>Provê food do Pet?  <StyledInput type="checkbox" width="20px" {...register("food")} ></StyledInput> </StyledLabel>
+                    <StyledLabel>Possui algum tipo de istraining ou curso na área?  <StyledInput type="checkbox" width="20px" {...register("istraining")}></StyledInput> </StyledLabel>
                     
                     
- 
+                    {loading && <p className="span-loading">CARREGANDO...</p>}
                      <Button w="50%" type ="submit">Cadastre-se</Button>
 
                      

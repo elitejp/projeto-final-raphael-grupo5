@@ -154,7 +154,7 @@ function DashboardOwner() {
   return (
     <StyledDivOwner>      
       <Header />
-      <Button className="btn-home" onClick={() => history.push("/home")}>Home</Button>
+      <Button isGray className="btn-home" onClick={() => history.push("/home")}>Home</Button>
       {modalDeletePet ? (
         <CreateModal>
           <StyledDiv fd="column">

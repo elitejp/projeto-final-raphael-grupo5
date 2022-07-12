@@ -48,6 +48,12 @@ const ContainerRegisterOwner = styled.div`
 		gap: 20px;
 		width: 75%;
 	}
+
+	.span-loading{
+    color: black;
+    margin: 0 auto;
+    margin-top: 15px;
+ }
 `;
 
 export default ContainerRegisterOwner;
