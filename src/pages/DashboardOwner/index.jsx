@@ -9,11 +9,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/Button";
 import { getOwnerAndPets } from "../../services/apiOwner";
-
 import Header from "../../components/Header";
 import UserHeader from "../../components/UserHeader";
 import ListPets from "../../components/ListPets";
 import { apiOwner } from "../../services";
+import ModalDate from "../../components/ModalDate";
 
 function DashboardOwner() {
   const ownerToken = localStorage.getItem("Token");
@@ -23,13 +23,10 @@ function DashboardOwner() {
   const [authenticated, setAuthenticated] = useState(false);
   const [ownerAndPets, setOwnerAndPets] = useState({});
   const [modalEditPet,setmodalEditPet] = useState(false)
+  const [modalDate, setmodalDate] = useState(true)
   const [Temp, setTemp] = useState({})
   
   useEffect(() => {
-    
-    console.log(ownerAndPets)
-    
-
     if (ownerToken) {
       
 
@@ -48,10 +45,10 @@ function DashboardOwner() {
     size: yup.string().required("Especifique o porte do animal"),
     breed: yup.string().required("Especifique a raça do animal"),
     obs_care: yup.string(),
+    start:yup.date("Especifique uma data").required("Especifique a data inicial")
   });
-
+ 
   function dados(dados) {
-    console.log(dados)
     toast.success(`${dados.nome} foi cadastrado com sucesso`);
    
     
@@ -96,6 +93,7 @@ function DashboardOwner() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(formSchema) });
 
+ 
   function modalEditar(dados,id){
     setTemp({dados,id})
 
@@ -104,9 +102,8 @@ function DashboardOwner() {
     
 
   }
+  
   function deletarCard(id){
-    console.log(id)
-    
     apiOwner.delete(`/pet/${id}`,{
       headers:{
         "Authorization": `Bearer ${ownerToken}`
@@ -117,8 +114,14 @@ function DashboardOwner() {
     setmodalDeletePet(false)
     
   }
-  function modalDeletar(dados){
+  
+  function dadosDate(dados){
     console.log(dados)
+
+  }
+
+  function modalDeletar(dados){
+    
     setTemp(dados)
     setmodalDeletePet(true)
     
@@ -156,6 +159,9 @@ function DashboardOwner() {
           </StyledDiv>
           </CreateModal>
       :""}
+
+{modalDate?<ModalDate setMDate={setmodalDate} dadosDate={dadosDate}/>:""}
+
       {modalEditPet?<CreateModal>
         
 
