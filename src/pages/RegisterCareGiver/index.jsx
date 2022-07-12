@@ -28,7 +28,8 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
             food: dados.food,
             istraining: dados.istraining,
             price: dados.price,
-            detail: dados.detail
+            detail: dados.detail,
+            url_img: dados.img
         }
         
         axios.post(baseURL+"/register",data)
@@ -59,6 +60,7 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
         food:yup.boolean(),
         price:yup.string().required("Especifique um valor"),
         detail:yup.string().required("Falo um pouco sobre você"),
+        img:yup.string().required("Informe o link de uma imagem sua"),
         istraining:yup.boolean()
     })
 
@@ -109,6 +111,10 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
                     <StyledLabel>Tipo de moradia</StyledLabel>
                     <Input placeholder="Especifique o tipo" h="40px" register = {register} name="type_house"/>
                     <StyledLabel color="pink" m="0">{errors.type_house?.message}</StyledLabel>
+                    
+                    <StyledLabel>Url de imagem</StyledLabel>
+                    <Input placeholder="Imagem sua" h="40px" register = {register} name="img"/>
+                    <StyledLabel color="pink" m="0">{errors.img?.message}</StyledLabel>
 
                     <StyledLabel>Preço Dia/hora</StyledLabel>
                     <Input placeholder="Digite o preço por dia e hora" h="40px" register = {register} name="price"/>
