@@ -17,6 +17,10 @@ export const StyledText= styled.p`
 color:${(props)=>props.color};
 font-size:${(props)=>props.fontsize};
 margin:${(props)=>props.margin};
+font-weight: ${(props)=>props.we};
+text-align: ${props=>props.ta};
+
+
 
 `
 export const StyledForm= styled.form`
@@ -31,7 +35,9 @@ gap:20px;
 `
 export const StyledLabel= styled.label`
 color:${(props)=>props.color||"white"};
-margin:${(props)=>props.m||"20px auto 5px 0"}
+margin:${(props)=>props.m||"20px auto 5px 0"};
+font-weight: ${(props)=>props.we};
+
 
 
 `
