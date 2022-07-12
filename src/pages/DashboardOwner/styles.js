@@ -67,3 +67,14 @@ border-radius:${(props)=>props.br||"5px"};
 border:0;
 cursor:pointer;
 `
+
+export const StyledDivOwner = styled.div`   
+    display: flex;
+    flex-direction: column;
+    .btn-home {
+        width: 30%;
+        margin: 0 auto;
+        margin-top: 15px;
+    }
+    
+`

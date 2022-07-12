@@ -16,15 +16,18 @@ import {
   import Button from "../../components/Button";
   import Input from "../../components/Input";
   import { apiOwner } from "../../services";
+import { useState } from "react";
   
   function LoginDono() {
     const history = useHistory();
+    const [loading, setLoading] = useState(false)
   
     function dados(dados) {
       const data = {
         email: dados.email,
         password: dados.password,
       };
+      setLoading(true)
       
       apiOwner.post("/login", data).then((res) => {
         
@@ -39,6 +42,8 @@ import {
       })
       .catch((err)=>{
               toast.error(err.response?.data)
+      }).finally(() => {
+        setLoading(false)
       })
   
     }
@@ -117,6 +122,7 @@ import {
               {errors.password?.message}
             </StyledLabel>
   
+            {loading && <p className="span-loading">CARREGANDO...</p>}
             <Button m="30px auto" w="50%" type="submit">
               Fazer login
             </Button>
