@@ -122,8 +122,9 @@ function DashboardOwner() {
     
   }
   
+  
   function dadosDate(dados){
-    console.log(dados)
+    
 
   }
 
