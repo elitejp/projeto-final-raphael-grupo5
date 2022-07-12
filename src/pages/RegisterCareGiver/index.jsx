@@ -32,7 +32,7 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
             
             if(res.status===201){
                toast.success("Conta criada com sucesso")
-               history.push("/dashboard-care")
+               history.push("/login-care")
 
             }
             
@@ -118,7 +118,7 @@ const baseURL = "https://caregiver-and-pets.herokuapp.com";
                      
                  </StyledForm>
                               
-                      <StyledText margin="0 auto 20px " color="gray" >Já possui conta? faça o login <Link to={"/login"}>aqui</Link></StyledText>
+                      <StyledText margin="0 auto 20px " color="gray" >Já possui conta? faça o login <Link to={"/login-care"}>aqui</Link></StyledText>
                       
                       
                       

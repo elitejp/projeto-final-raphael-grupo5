@@ -7,9 +7,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { apiOwner } from "../../services/index.js";
 import Button from "../../components/Button/index.jsx";
 import Input from "../../components/Input/index.jsx";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function RegisterOwner() {
+	const history= useHistory()
 	const schema = yup.object().shape({
 		name: yup.string().required("Campo obrigatório").min(3, "Minimo de 3 letras"),
 		age: yup.string().required("Campo obrigatório"),
@@ -46,6 +47,7 @@ function RegisterOwner() {
 			.then((response) => {
 				console.log(response);
 				toast.success("Cadastrado com sucesso!");
+				history.push("/login-owner")
 			})
 			.catch((err) => {
 				let erro = err.response.data;
@@ -126,7 +128,7 @@ function RegisterOwner() {
 						/>
 
 						<Button type="submit">Cadastre-se</Button>
-						<Link to={"/login"}>Já possui conta? Faça o login aqui</Link>
+						<Link to={"/login-dono"}>Já possui conta? Faça o login aqui</Link>
 					</form>
 				</section>
 			</ContainerRegisterOwner>
