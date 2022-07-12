@@ -6,6 +6,7 @@ import LoginDono from "../pages/Login_Dono";
 import RegisterCareGiver from "../pages/RegisterCareGiver";
 import RegisterOwner from "../pages/RegisterOwner";
 import LandingPage from "../pages/LandingPage";
+import Home from "../pages/Home";
 
 function Routes() {
   const history = useHistory();
@@ -39,6 +40,10 @@ function Routes() {
 
         <Route exact path="/dashboard-owner">
           <DashboardOwner />
+        </Route>
+
+        <Route exact path="/home">
+          <Home />
         </Route>
       </Switch>
     </Router>
