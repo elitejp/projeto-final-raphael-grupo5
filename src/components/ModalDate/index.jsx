@@ -53,6 +53,7 @@ function ModalDate ({setMdate,dadosDate}){
               <StyledDiv>
                 <Button type="submit" w="40%">
                   Reservar
+                  
                 </Button>
                 <Button
                   onClick={(e) => {
