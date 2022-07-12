@@ -13,17 +13,24 @@ import { getOwnerAndPets } from "../../services/apiOwner";
 import Header from "../../components/Header";
 import UserHeader from "../../components/UserHeader";
 import ListPets from "../../components/ListPets";
+import { apiOwner } from "../../services";
 
 function DashboardOwner() {
+  const ownerToken = localStorage.getItem("Token");
+  const ownerId = JSON.parse(localStorage.getItem("User"))
   const [modalCreatePet, setmodalCreatePet] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [ownerAndPets, setOwnerAndPets] = useState({});
-
+  const [modalEditPet,setmodalEditPet] = useState(false)
+  const [Temp, setTemp] = useState({})
+  
   useEffect(() => {
-    const ownerToken = localStorage.getItem("Token");
+    
+    console.log(ownerAndPets)
+    
 
     if (ownerToken) {
-      const ownerId = JSON.parse(localStorage.getItem("User"))
+      
 
       getOwnerAndPets(ownerId.id, ownerToken).then((res) => setOwnerAndPets(res));
 
@@ -31,20 +38,55 @@ function DashboardOwner() {
     }
   }, [authenticated]);
 
+ 
+
   const formSchema = yup.object().shape({
-    nome: yup.string().required("Escreva o nome do animal"),
-    tipo: yup.string().required("Escreva o tipo de animal"),
-    idade: yup.string().required("Diga a idade do animal"),
-    porte: yup.string().required("Especifique o porte do animal"),
-    raca: yup.string().required("Especifique a raça do animal"),
-    obs_cuidado: yup.string(),
+    name: yup.string().required("Escreva o nome do animal"),
+    type: yup.string().required("Escreva o tipo de animal"),
+    age: yup.string().required("Diga a idade do animal"),
+    size: yup.string().required("Especifique o porte do animal"),
+    breed: yup.string().required("Especifique a raça do animal"),
+    obs_care: yup.string(),
   });
 
   function dados(dados) {
+    console.log(dados)
     toast.success(`${dados.nome} foi cadastrado com sucesso`);
+   
+    
+    getOwnerAndPets(ownerId.id, ownerToken).then((res) => setOwnerAndPets(res));
 
-    console.log(dados);
+    apiOwner.post("/pet",{
+      name:dados.name,
+      type:dados.type,
+      age:dados.age,
+      breed: dados.breed,
+      size:dados.size,
+      obs_care:dados.obs_care,
+      userId:ownerAndPets.id
+      
+
+    }, { headers:{
+      "Authorization": `Bearer ${ownerToken}`}
+
+    }).then(res=>console.log(res))
     setmodalCreatePet(false);
+  }
+  function dadosEditar(dados){
+   apiOwner.put(`/pet/${Temp.id}`,{
+    name:dados.name,
+    type:dados.type,
+    age:dados.age,
+    breed: dados.breed,
+    size:dados.size,
+    obs_care:dados.obs_care,
+    userId:ownerAndPets.id
+   },{headers:{
+    "Authorization": `Bearer ${ownerToken}`
+   }}).then(res=>res.status===200&&toast.success("Editado com sucesso"))
+   .catch(res=>console.log(res.response.data))
+   setmodalEditPet(false)
+   setTemp({})
   }
 
   const {
@@ -53,15 +95,100 @@ function DashboardOwner() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(formSchema) });
 
+  function modalEditar(dados,id){
+    setTemp({dados,id})
+
+    setmodalEditPet(true)
+    
+    
+
+  }
+  function modalDeletar(dados){
+
+  }
+
   return (
     <>
+    
       <Header />
+      {modalEditPet?<CreateModal>
+        
+
+        <StyledDiv fd="column">
+            <StyledForm onSubmit={handleSubmit(dadosEditar)}>
+              <StyledDiv fd="column">
+                <Input label="Nome:" register={register} defaultValue={Temp.dados.name} name="name" />
+                <StyledLabel color="pink" m="0">
+                  {errors.name?.message}
+                </StyledLabel>
+
+                <Input
+                  label="Tipo de animal:"
+                  register={register}
+                  name="type"
+                  defaultValue={Temp.dados.type}
+                />
+                <StyledLabel color="pink" m="0">
+                  {errors.type?.message}
+                </StyledLabel>
+
+                <Input
+                  label="Idade:"
+                  type="number"
+                  register={register}
+                  name="age"
+                  defaultValue={Temp.dados.age}
+                />
+                <StyledLabel color="pink" m="0">
+                  {errors.age?.message}
+                </StyledLabel>
+
+                <Input label="Porte fisico:" register={register} defaultValue={Temp.dados.size} name="size" />
+                <StyledLabel color="pink" m="0">
+                  {errors.size?.message}
+                  
+                </StyledLabel>
+
+                <Input label="Raça:" register={register} name="breed" defaultValue={Temp.dados.breed} />
+                <StyledLabel color="pink" m="0">
+                  {errors.breed?.message}
+                </StyledLabel>
+
+                <Input
+                  label="Observações e cuidados"
+                  register={register}
+                  name="obs_care"
+                  defaultValue={Temp.obs_care}
+                />
+              </StyledDiv>
+              <StyledDiv>
+                <Button type="submit" w="40%">
+                  Concluir
+                </Button>
+                <Button
+                  onClick={(e) => {
+                    setmodalEditPet(false);
+                    setTemp({})
+                  }}
+                  w="40%"
+                  isGray
+                >
+                  Cancelar
+                </Button>
+              </StyledDiv>
+            </StyledForm>
+          </StyledDiv>
+
+      </CreateModal>:""}
+
+
+
       {modalCreatePet ? (
         <CreateModal>
           <StyledDiv fd="column">
             <StyledForm onSubmit={handleSubmit(dados)}>
               <StyledDiv fd="column">
-                <Input label="Nome:" register={register} name="nome" />
+                <Input label="Nome:" register={register} name="name" />
                 <StyledLabel color="pink" m="0">
                   {errors.nome?.message}
                 </StyledLabel>
@@ -69,36 +196,36 @@ function DashboardOwner() {
                 <Input
                   label="Tipo de animal:"
                   register={register}
-                  name="tipo"
+                  name="type"
                 />
                 <StyledLabel color="pink" m="0">
-                  {errors.tipo?.message}
+                  {errors.type?.message}
                 </StyledLabel>
 
                 <Input
                   label="Idade:"
                   type="number"
                   register={register}
-                  name="idade"
+                  name="age"
                 />
                 <StyledLabel color="pink" m="0">
-                  {errors.idade?.message}
+                  {errors.age?.message}
                 </StyledLabel>
 
-                <Input label="Porte fisico:" register={register} name="porte" />
+                <Input label="Porte fisico:" register={register} name="size" />
                 <StyledLabel color="pink" m="0">
-                  {errors.porte?.message}
+                  {errors.size?.message}
                 </StyledLabel>
 
-                <Input label="Raça:" register={register} name="raca" />
+                <Input label="Raça:" register={register} name="breed" />
                 <StyledLabel color="pink" m="0">
-                  {errors.raca?.message}
+                  {errors.breed?.message}
                 </StyledLabel>
 
                 <Input
                   label="Observações e cuidados"
                   register={register}
-                  name="obs_cuidado"
+                  name="obs_care"
                 />
               </StyledDiv>
               <StyledDiv>
@@ -122,13 +249,14 @@ function DashboardOwner() {
         ""
       )}
 
+
       <UserHeader
         name={ownerAndPets?.name}
         userType="owner"
         setmodalCreatePet={setmodalCreatePet}
       />
 
-      <ListPets pets={ownerAndPets?.pet} />
+      <ListPets modalEditar={modalEditar} modalDeletar={modalDeletar} pets={ownerAndPets?.pet} />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import CardPet from "../CardPet";
 import { StyledDataBox, StyledListPets } from "./styles";
 
-function ListPets({ children, pets, ...rest }) {
+function ListPets({ children,  modalEditar ,modalDeletar,pets, ...rest }) {
   return (
     <StyledDataBox {...rest}>
       {children}
@@ -13,7 +13,7 @@ function ListPets({ children, pets, ...rest }) {
 
       <StyledListPets>
         {pets?.map((pet) => (
-          <CardPet key={pet.id} pet={pet} />
+          <CardPet  key={pet.id} id={pet.id} pet={pet} modalEditar={modalEditar} modalDeletar={modalDeletar} />
         ))}
       </StyledListPets>
     </StyledDataBox>
