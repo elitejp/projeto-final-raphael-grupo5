@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CreateModal from "../../components/Modals";
 import Input from "../../components/Input";
-import { StyledDiv, StyledLabel, StyledForm, StyledText } from "./styles";
+import { StyledDiv, StyledLabel, StyledForm, StyledText, StyledDivOwner } from "./styles";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,8 +14,10 @@ import UserHeader from "../../components/UserHeader";
 import ListPets from "../../components/ListPets";
 import { apiOwner } from "../../services";
 import ModalDate from "../../components/ModalDate";
+import { useHistory } from "react-router-dom";
 
 function DashboardOwner() {
+  const history = useHistory();
   const ownerToken = localStorage.getItem("Token");
   const ownerId = JSON.parse(localStorage.getItem("User"));
   const [modalCreatePet, setmodalCreatePet] = useState(false);
@@ -150,8 +152,9 @@ function DashboardOwner() {
   }
 
   return (
-    <>
+    <StyledDivOwner>      
       <Header />
+      <Button className="btn-home" onClick={() => history.push("/home")}>Home</Button>
       {modalDeletePet ? (
         <CreateModal>
           <StyledDiv fd="column">
@@ -351,7 +354,7 @@ function DashboardOwner() {
         modalDeletar={modalDeletar}
         pets={ownerAndPets?.pet}
       />
-    </>
+    </StyledDivOwner>    
   );
 }
 
