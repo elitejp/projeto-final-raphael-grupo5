@@ -15,7 +15,7 @@ import {
   import "react-toastify/dist/ReactToastify.css";
   import Button from "../../components/Button";
   import Input from "../../components/Input";
-  import { apiCare, apiOwner } from "../../services";
+  import { apiOwner } from "../../services";
   
   function LoginDono() {
     const history = useHistory();
@@ -39,8 +39,6 @@ import {
       })
       .catch((err)=>{
               toast.error(err.response?.data)
-  
-          
       })
   
     }

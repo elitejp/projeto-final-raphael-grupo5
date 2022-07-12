@@ -9,11 +9,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/Button";
 import { getOwnerAndPets } from "../../services/apiOwner";
-
 import Header from "../../components/Header";
 import UserHeader from "../../components/UserHeader";
 import ListPets from "../../components/ListPets";
 import { apiOwner } from "../../services";
+import ModalDate from "../../components/ModalDate";
 
 function DashboardOwner() {
   const ownerToken = localStorage.getItem("Token");
@@ -22,12 +22,11 @@ function DashboardOwner() {
   const [modalDeletePet, setmodalDeletePet] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [ownerAndPets, setOwnerAndPets] = useState({});
-  const [modalEditPet, setmodalEditPet] = useState(false);
-  const [Temp, setTemp] = useState({});
-
+  const [modalEditPet,setmodalEditPet] = useState(false)
+  const [modalDate, setmodalDate] = useState(true)
+  const [Temp, setTemp] = useState({})
+  
   useEffect(() => {
-    console.log(ownerAndPets);
-
     if (ownerToken) {
       getOwnerAndPets(ownerId.id, ownerToken).then((res) =>
         setOwnerAndPets(res)
@@ -44,8 +43,9 @@ function DashboardOwner() {
     physical_shape: yup.string().required("Especifique o porte do animal"),
     breed: yup.string().required("Especifique a raça do animal"),
     note: yup.string(),
-  });
 
+  });
+ 
   function dados(dados) {
     console.log(dados);
     toast.success(`${dados.name} foi cadastrado com sucesso`);
@@ -109,10 +109,32 @@ function DashboardOwner() {
 
     setmodalEditPet(true);
   }
-  function deletarCard(id) {
-    console.log(id);
+  
+  function deletarCard(id){
+    apiOwner.delete(`/pet/${id}`,{
+      headers:{
+        "Authorization": `Bearer ${ownerToken}`
+      }
+    })
+    toast.success("Excluido com sucesso")
+    setTemp({})
+    setmodalDeletePet(false)
+    
+  }
+  
+  function dadosDate(dados){
+    console.log(dados)
 
-    apiOwner.delete(`/pet/${id}`, {
+  }
+
+  function modalDeletar(dados){
+    console.log(dados.id)
+    
+    setTemp(dados)
+    setmodalDeletePet(true)
+    
+
+    apiOwner.delete(`/pet/${dados.id}`, {
       headers: {
         Authorization: `Bearer ${ownerToken}`,
       },
