@@ -1,13 +1,11 @@
 import { Route, Router, Switch, useHistory } from "react-router-dom";
 import DashboardCareGiver from "../pages/DashboardCareGiver";
 import DashboardOwner from "../pages/DashboardOwner";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
 import LoginCuidador from "../pages/Login_Cuidador";
 import LoginDono from "../pages/Login_Dono";
 import RegisterCareGiver from "../pages/RegisterCareGiver";
 import RegisterOwner from "../pages/RegisterOwner";
-import LandingPage from "../pages/LandingPage"
+import LandingPage from "../pages/LandingPage";
 
 function Routes() {
   const history = useHistory();
@@ -16,31 +14,23 @@ function Routes() {
     <Router history={history}>
       <Switch>
         <Route exact path="/">
-          <Home />
-        </Route>
-
-        <Route exact path="/login">
-          <Login />
+          <LandingPage />
         </Route>
 
         <Route exact path="/register-care">
-        <RegisterCareGiver />
+          <RegisterCareGiver />
         </Route>
 
         <Route exact path="/login-care">
-        <LoginCuidador/>
-        </Route>
-
-        <Route exact path="/login-dono">
-        <LoginDono/>
+          <LoginCuidador />
         </Route>
 
         <Route exact path="/register-owner">
           <RegisterOwner />
         </Route>
 
-        <Route exact path="/landing-page">
-          <LandingPage />
+        <Route exact path="/login-dono">
+          <LoginDono />
         </Route>
 
         <Route exact path="/dashboard-care">
@@ -55,4 +45,4 @@ function Routes() {
   );
 }
 
-export default Routes
+export default Routes;

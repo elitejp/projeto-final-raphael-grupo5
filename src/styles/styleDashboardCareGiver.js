@@ -1,100 +1,107 @@
 import styled from "styled-components";
 
 const ContainerDashboardCareGiver = styled.div`
-	background-color: var(--grey300);
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	padding: 10px;
-	font-family: "Inter", sans-serif;
-	font-weight: 600;
-	gap: 5px;
+  background-color: var(--grey300);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  gap: 5px;
 
-	.infoCaregiver {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		width: 100%;
+  .container {
+    button {
+      width: 50%;
+			font-size: 20px;
+    }
+  }
 
-		img {
-			width: 50px;
-			height: 50px;
-			border-radius: 100%;
-		}
+  .infoCaregiver {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 
-		div {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			gap: 15px;
-		}
-	}
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+    }
 
-	.infoOwners {
-		border: 4px solid var(--secondary100);
-		border-radius: 4px;
-		display: flex;
-		flex-direction: column;
-		padding: 10px;
-		gap: 30px;
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+  }
 
-		li {
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-			width: 100%;
-		}
+  .infoOwners {
+    border: 4px solid var(--secondary100);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 30px;
 
-		div {
-			display: flex;
-			justify-content: space-between;
+    li {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
 
-			p:nth-child(1) {
-				font-weight: 600;
-			}
-		}
-	}
+    div {
+      display: flex;
+      justify-content: space-between;
 
-	.infoPets {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		font-weight: 400;
+      p:nth-child(1) {
+        font-weight: 600;
+      }
+    }
+  }
 
-		li {
-			background-color: var(--primary200);
-			border-radius: 5px;
-			padding: 7px;
+  .infoPets {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 400;
 
-			div {
-				background-color: var(--primary300);
-				padding: 2px 5px 2px 5px;
-			}
-		}
-		.obsPet {
-			flex-direction: column;
-			gap: 5px;
-		}
-	}
+    li {
+      background-color: var(--primary200);
+      border-radius: 5px;
+      padding: 7px;
 
-	.buttons {
-		display: flex;
-		gap: 20px;
-		justify-content: space-between;
-		padding: 10px;
-	}
+      div {
+        background-color: var(--primary300);
+        padding: 2px 5px 2px 5px;
+      }
+    }
+    .obsPet {
+      flex-direction: column;
+      gap: 5px;
+    }
+  }
 
-	@media (min-width: 600px) {
-		justify-content: center;
-		align-items: center;
-		.container {
-			max-width: 600px;
-			width: 100vw;
+  .buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    padding: 10px;
+  }
 
-			display: flex;
-			flex-direction: column;
-		}
-	}
+  @media (min-width: 600px) {
+    justify-content: center;
+    align-items: center;
+    .container {
+      max-width: 600px;
+      width: 100vw;
+
+      display: flex;
+      flex-direction: column;
+    }
+  }
 `;
 
 export default ContainerDashboardCareGiver;
