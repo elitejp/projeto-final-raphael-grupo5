@@ -13,8 +13,13 @@ function ModalDate ({setMdate,dadosDate}){
 
    
     const formSchema = yup.object().shape({
-      end: yup.date().required("Selecione uma data"),
-      start:yup.date("Especifique uma data").required("Especifique a data inicial")
+      
+      start:yup.date("Especifique uma data").required("Especifique a data inicial"),
+      end: yup.date().required("Selecione uma data").when('start', (start) => {
+        if (start) {
+            return yup.date().min(start, 'A data final deve vir depois da data inicial')
+        }
+    }),
       });
    
 

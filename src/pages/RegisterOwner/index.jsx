@@ -47,7 +47,7 @@ function RegisterOwner() {
 			.then((response) => {
 				console.log(response);
 				toast.success("Cadastrado com sucesso!");
-				history.push("/login-owner")
+				history.push("/login-dono")
 			})
 			.catch((err) => {
 				let erro = err.response.data;
@@ -58,6 +58,7 @@ function RegisterOwner() {
 					toast.error("Ops! Algo deu errado");
 				}
 			});
+			
 	};
 
 	return (

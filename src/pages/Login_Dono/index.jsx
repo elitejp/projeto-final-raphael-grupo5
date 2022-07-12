@@ -39,8 +39,6 @@ import {
       })
       .catch((err)=>{
               toast.error(err.response?.data)
-  
-          
       })
   
     }

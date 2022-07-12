@@ -160,7 +160,7 @@ function DashboardOwner() {
           </CreateModal>
       :""}
 
-{modalDate?<ModalDate setMDate={setmodalDate} dadosDate={dadosDate}/>:""}
+{modalDate?<ModalDate setMdate={setmodalDate} dadosDate={dadosDate}/>:""}
 
       {modalEditPet?<CreateModal>
         
