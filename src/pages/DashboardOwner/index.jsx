@@ -49,7 +49,7 @@ function DashboardOwner() {
   });
  
   function dados(dados) {
-    console.log(dados);
+    
     toast.success(`${dados.name} foi cadastrado com sucesso`);
 
     getOwnerAndPets(ownerId.id, ownerToken).then((res) => setOwnerAndPets(res));
@@ -131,8 +131,6 @@ function DashboardOwner() {
   }
 
   function modalDeletar(dados){
-    console.log(dados.id)
-    
     setTemp(dados)
     setmodalDeletePet(true)
     
@@ -147,7 +145,7 @@ function DashboardOwner() {
     setmodalDeletePet(false);
   }
   function modalDeletar(dados) {
-    console.log(dados);
+    
     setTemp(dados);
     setmodalDeletePet(true);
   }
@@ -251,6 +249,7 @@ function DashboardOwner() {
                   name="note"
                   defaultValue={Temp.note}
                 />
+                
               </StyledDiv>
               <StyledDiv>
                 <Button type="submit" w="40%">
