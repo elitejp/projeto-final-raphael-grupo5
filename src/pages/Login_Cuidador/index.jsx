@@ -17,7 +17,6 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { apiCare } from "../../services";
 import { useState } from "react";
-import Loading from "../../components/Loading";
 
 function LoginCuidador() {
   const history = useHistory();
@@ -28,7 +27,6 @@ function LoginCuidador() {
       email: dados.email,
       password: dados.password,
     };
-
     setLoading(true)
     
     apiCare.post("/login", data).then((res) => {

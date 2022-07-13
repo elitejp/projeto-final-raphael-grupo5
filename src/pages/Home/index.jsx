@@ -6,11 +6,13 @@ import SearchInput from "../../components/SearchInput";
 import Button from "../../components/Button";
 import { StyledDiv } from "./style";
 import { useHistory } from "react-router-dom";
+import ModalDate from "../../components/ModalDate";
 
 function Home() {
   const history = useHistory();
   const [authenticated, setAuthenticated] = useState(false);
   const [careGivers, setCareGivers] = useState([]);
+  
 
   useEffect(() => {
     const careToken = localStorage.getItem("Token");
@@ -32,7 +34,8 @@ function Home() {
         Área do Usuário
       </Button>
       <SearchInput />
-      <ListCare careGivers={careGivers} />
+      <ListCare careGivers={careGivers}/>
+      
     </StyledDiv>
   );
 }
