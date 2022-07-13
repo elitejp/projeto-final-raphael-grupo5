@@ -16,7 +16,7 @@ function CardCare({ careGiver}) {
           src="https://sm.ign.com/ign_br/screenshot/default/goku_trw2.jpg"
           alt={careGiver.name}
           />
-        <ReviewStars reviewPoints={4} />
+        <ReviewStars reviewPoints={+careGiver.assessments} />
         <p>{3} Avaliações</p>
       </div>
 
