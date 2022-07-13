@@ -17,6 +17,8 @@ export const Container = styled.button`
 
   :hover {
     border: 2px solid #000000;
+    background: ${(props) =>
+    props.isGray ? "#F1F1F1" : props.notPrimary ? "#C2ECF5" : "#F28631"};
   }
 
   :active {
