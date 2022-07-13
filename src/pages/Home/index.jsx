@@ -11,17 +11,28 @@ function Home() {
   const history = useHistory();
   const [authenticated, setAuthenticated] = useState(false);
   const [careGivers, setCareGivers] = useState([]);
-  
+  const [filterCareGivers, setFilterCareGivers] = useState([]);
+
+  const filterCare = (address) => {
+    setFilterCareGivers(
+      careGivers.filter((care) =>
+        care.address.toLowerCase().includes(address.toLowerCase())
+      )
+    );
+  };
 
   useEffect(() => {
     const careToken = localStorage.getItem("Token");
 
     if (careToken) {
-      getCareGiver(careToken).then((res) => setCareGivers(res));
+      getCareGiver(careToken)
+        .then((res) => setCareGivers(res))
+        .then(() => setFilterCareGivers(careGivers));
 
       return setAuthenticated(true);
     }
   }, [authenticated]);
+
   return (
     <StyledDiv>
       <Header />
@@ -32,9 +43,8 @@ function Home() {
       >
         Área do Usuário
       </Button>
-      <SearchInput />
-      <ListCare careGivers={careGivers}/>
-      
+      <SearchInput filterCare={filterCare} />
+      <ListCare careGivers={filterCareGivers} />
     </StyledDiv>
   );
 }

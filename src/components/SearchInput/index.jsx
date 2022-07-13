@@ -1,8 +1,11 @@
 import Button from "../Button";
 import Input from "../Input";
 import { StyledSearchInput } from "./styles";
+import { FaSearchLocation } from "react-icons/fa";
+import { useState } from "react";
 
-function SearchInput() {
+function SearchInput({ filterCare }) {
+  const [searchAddress, setSearchAddress] = useState("");
   return (
     <StyledSearchInput>
       <Input
@@ -10,8 +13,12 @@ function SearchInput() {
         register={() => ""}
         name=""
         placeholder="Pesquise seu Endereço"
+        value={searchAddress}
+        onChange={(event) => setSearchAddress(event.target.value)}
       />
-      <Button>Lupa</Button>
+      <Button w="50px" m="0" onClick={() => filterCare(searchAddress)}>
+        <FaSearchLocation />
+      </Button>
     </StyledSearchInput>
   );
 }
