@@ -4,13 +4,24 @@ import Input from "../Input";
 import CreateModal from "../Modals";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { getOwnerAndPets } from "../../services/apiOwner";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { apiCare } from "../../services";
+import { useEffect } from "react";
 
-function ModalDate ({setMdate,dadosDate}){
+function ModalDate ({setMdate, dadosDate}){
+    const dados = JSON.parse(localStorage.getItem('User'))
+    const token = localStorage.getItem('Token')
+    const [user, setUser] = useState(null)
 
+    useEffect(() => {
+      getOwnerAndPets(dados.id, token).then((res) =>{
+        setUser(res)       
+      });
+    }, [])
    
     const formSchema = yup.object().shape({
       
@@ -27,15 +38,40 @@ function ModalDate ({setMdate,dadosDate}){
         register,
         handleSubmit,
         formState: { errors },
-      } = useForm({ resolver: yupResolver(formSchema), });
-    
+      } = useForm({ resolver: yupResolver(formSchema), });      
+
+    function submit({start, end}){      
+      
+
+      const initial_date = `${start.getDate()}/${start.getMonth() + 1}/${start.getFullYear()}` 
+      const final_date = `${end.getDate()}/${end.getMonth() + 1}/${end.getFullYear()}` 
+              
+      const data = {
+        email: user.email,
+        name: user.name,
+        telephone: user.telephone,
+        age: user.age,
+        initial_date: initial_date,
+        final_date: final_date,
+        userId: dadosDate.id,
+        pet: user.pet
+      }
+
+      apiCare.post('/request', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+				console.log(response);
+				toast.success("Pedido com sucesso!");		
+        setMdate(false)
+			})
+    }
 
     return(
-    <CreateModal>
-        
-
+    <CreateModal className={"modal-date"}>
         <StyledDiv fd="column">
-            <StyledForm onSubmit={handleSubmit(dadosDate)}>
+            <StyledForm onSubmit={handleSubmit(submit)}>
               <StyledDiv fd="column">
                 <Input  type="date" label="De:" register={register}  name="start" />
                 <StyledLabel color="pink" m="0">

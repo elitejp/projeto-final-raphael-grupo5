@@ -58,4 +58,8 @@ export const StyledCardCare = styled.li`
       }
     }
   }
+
+  .modal-date{    
+    /* width: 88%; */
+  }
 `;

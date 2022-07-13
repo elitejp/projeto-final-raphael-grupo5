@@ -11,6 +11,7 @@ function Home() {
   const history = useHistory();
   const [authenticated, setAuthenticated] = useState(false);
   const [careGivers, setCareGivers] = useState([]);
+  
 
   useEffect(() => {
     const careToken = localStorage.getItem("Token");
@@ -32,7 +33,8 @@ function Home() {
         Área do Usuário
       </Button>
       <SearchInput />
-      <ListCare careGivers={careGivers} />
+      <ListCare careGivers={careGivers}/>
+      
     </StyledDiv>
   );
 }
