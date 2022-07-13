@@ -9,8 +9,8 @@ function CardCare({ careGiver}) {
 
   return (
     <>
-    {modalDate && <ModalDate setMdate={setMdate} dadosDate={careGiver}/>}
     <StyledCardCare>
+    {modalDate && <ModalDate className="modal-date" setMdate={setMdate} dadosDate={careGiver}/>}
       <div className="img-review">
         <img
           src="https://sm.ign.com/ign_br/screenshot/default/goku_trw2.jpg"

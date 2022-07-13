@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { apiCare, apiOwner } from "../../services";
+import { apiCare } from "../../services";
 import { useEffect } from "react";
 
 function ModalDate ({setMdate, dadosDate}){
@@ -69,7 +69,7 @@ function ModalDate ({setMdate, dadosDate}){
     }
 
     return(
-    <CreateModal>
+    <CreateModal className={"modal-date"}>
         <StyledDiv fd="column">
             <StyledForm onSubmit={handleSubmit(submit)}>
               <StyledDiv fd="column">
