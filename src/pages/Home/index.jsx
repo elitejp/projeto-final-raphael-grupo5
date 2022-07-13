@@ -9,7 +9,6 @@ import { useHistory } from "react-router-dom";
 
 function Home() {
   const history = useHistory();
-  const [authenticated, setAuthenticated] = useState(false);
   const [careGivers, setCareGivers] = useState([]);
   const [filterCareGivers, setFilterCareGivers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,7 +33,6 @@ function Home() {
           setLoading(false);
         });
 
-      return setAuthenticated(true);
     }
   }, [loading]);
 
