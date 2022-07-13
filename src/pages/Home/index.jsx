@@ -12,6 +12,7 @@ function Home() {
   const [authenticated, setAuthenticated] = useState(false);
   const [careGivers, setCareGivers] = useState([]);
   const [filterCareGivers, setFilterCareGivers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const filterCare = (address) => {
     setFilterCareGivers(
@@ -27,11 +28,15 @@ function Home() {
     if (careToken) {
       getCareGiver(careToken)
         .then((res) => setCareGivers(res))
-        .then(() => setFilterCareGivers(careGivers));
+        .then(() => setFilterCareGivers(careGivers))
+        .then(() => {
+          filterCare("");
+          setLoading(false);
+        });
 
       return setAuthenticated(true);
     }
-  }, [authenticated]);
+  }, [loading]);
 
   return (
     <StyledDiv>
@@ -44,7 +49,11 @@ function Home() {
         Área do Usuário
       </Button>
       <SearchInput filterCare={filterCare} />
-      <ListCare careGivers={filterCareGivers} />
+      {loading ? (
+        <p>Carregando...</p>
+      ) : (
+        <ListCare careGivers={filterCareGivers} />
+      )}
     </StyledDiv>
   );
 }
